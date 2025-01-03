@@ -27,7 +27,7 @@ class Dataset(object):
         self.list_examples_cam = np.array(list_examples_file.read().splitlines())
         list_examples_file.close()
 
-    def rgb_normalize(self, rgb):
+    def rgb_anno_normalize(self, rgb):
         """
         Resize the input image to specified size. Keep same aspect ratio and pad the gap.
         i.e. first 752x480 -> 640x408, then padding the top and bottom to 640x480.
@@ -43,7 +43,7 @@ class Dataset(object):
 
         if width_ratio > height_ratio:  # width is reference, padding height (top and bottom)
             new_size = (int(rgb_set_size[1] / width_ratio), int(rgb_set_size[0]))  # (408, 640)
-            self.rgb_normalize = v2.Compose([
+            rgb_normalize = v2.Compose([
                 v2.Resize(new_size, interpolation=v2.InterpolationMode.BILINEAR),
                 v2.Pad((0, int((rgb_set_size[1] - new_size[0]) / 2),  # pad (left,top,right,bottom)->(0,36,0,36)
                         0, int((rgb_set_size[1] - new_size[0]) / 2))),
@@ -52,21 +52,33 @@ class Dataset(object):
                 v2.Normalize(mean=self.config['Dataset']['transforms']['image_mean'],
                              std=self.config['Dataset']['transforms']['image_mean'])
             ])
+            anno_resize = v2.Compose([
+                v2.Resize(new_size, interpolation=v2.InterpolationMode.BILINEAR),
+                v2.Pad((0, int((rgb_set_size[1] - new_size[0]) / 2),  # pad (left,top,right,bottom)->(0,36,0,36)
+                        0, int((rgb_set_size[1] - new_size[0]) / 2))),
+                v2.ToImage(),
+                v2.ToDtype(torch.float32, scale=True)
+            ])
 
         else:  # height is reference, padding width (left and right)
             new_size = (int(rgb_set_size[1]), int(rgb_set_size[0] / height_ratio))
-            self.rgb_normalize = v2.Compose([
+            rgb_normalize = v2.Compose([
                 v2.Resize(new_size, interpolation=v2.InterpolationMode.BILINEAR),
                 v2.Pad((int((rgb_set_size[0] - new_size[1]) / 2), 0,
                         int((rgb_set_size[0] - new_size[1]) / 2), 0)),
-                v2.ToTensor(),
+                v2.ToImage(),
+                v2.ToDtype(torch.float32, scale=True),
                 v2.Normalize(mean=self.config['Dataset']['transforms']['image_mean'],
                              std=self.config['Dataset']['transforms']['image_mean'])])
-        return self.rgb_normalize
 
-    def anno_resize(self, anno):
-        self.anno_resize = v2.Resize(self.img_size, interpolation=v2.InterpolationMode.NEAREST)
-        return
+            anno_resize = v2.Compose([
+                v2.Resize(new_size, interpolation=v2.InterpolationMode.BILINEAR),
+                v2.Pad((int((rgb_set_size[0] - new_size[1]) / 2), 0,
+                        int((rgb_set_size[0] - new_size[1]) / 2), 0)),
+                v2.ToImage(),
+                v2.ToDtype(torch.float32, scale=True)
+            ])
+        return rgb_normalize, anno_resize
 
     def __len__(self):
         return len(self.list_examples_cam)
@@ -95,12 +107,10 @@ class Dataset(object):
         anno_name = anno_path.split('/')[-1].split('.')[0]
         assert (rgb_name == anno_name), "rgb and anno input not matching"
 
-        # Crop the top part 1/2 of the input data
         rgb_orig = rgb.copy()
-        w_orig, h_orig = rgb.size  # PIL tuple. (w, h)
 
-        rgb = self.rgb_normalize(rgb)  # Tensor [3, 384, 384]
-        anno = self.anno_resize(anno).squeeze(0)  # Tensor
+        rgb_norm, anno_resize = self.rgb_anno_normalize(rgb)
+        rgb = rgb_norm(rgb)
+        anno = anno_resize(anno)
 
-        return {'rgb': rgb, 'rgb_orig': rgb_orig,
-                'lidar': lid_images, 'anno': anno}
+        return {'rgb': rgb, 'rgb_orig': rgb_orig, 'anno': anno}

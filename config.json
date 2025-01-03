@@ -1,4 +1,10 @@
 {
+    "General":{
+        "device":"cuda:0",
+        "epochs":400,
+        "batch_size":24,
+        "path_predicted_images":"output",
+    },
   "mlnet_input_size": [640, 480],
   "Dataset": {
     "name": "smirk",
