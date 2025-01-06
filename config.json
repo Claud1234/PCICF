@@ -6,6 +6,8 @@
         "path_predicted_images":"output",
     },
   "mlnet_input_size": [640, 480],
+  "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pt",
+  "mlnet_pred_saving_path": "",
   "Dataset": {
     "name": "smirk",
     "transforms": {
