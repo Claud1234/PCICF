@@ -2,11 +2,10 @@
     "General":{
         "device":"cuda:0",
         "epochs":400,
-        "batch_size":24,
-        "path_predicted_images":"output",
+        "batch_size":24
     },
   "mlnet_input_size": [640, 480],
-  "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pt",
+  "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pth",
   "mlnet_pred_saving_path": "",
   "Dataset": {
     "name": "smirk",

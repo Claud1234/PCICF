@@ -22,8 +22,8 @@ class Tester(object):
         if args.backbone == 'mlnet':
             print(f'Using backbone {args.backbone}')
             self.model = MLnet([config['mlnet_input_size'][1], config['mlnet_input_size'][0]])
-            model_path = config['mlnet_model_path']
-            self.model.load_state_dict(torch.load(model_path, map_location=self.device)['model'])
+            checkpoint_path = config['mlnet_model_path']
+            self.model.load_state_dict(torch.load(checkpoint_path, map_location=self.device)['model'])
 
         elif args.backbone == 'tasednet':
             print(f'Using backbone {args.backbone}')
