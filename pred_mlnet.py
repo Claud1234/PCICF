@@ -16,9 +16,9 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 
+import utils.helper as helper
 from models.mlnet.mlnet import MLnet
-from utils.helper import rgb_anno_normalize, creat_dir, image_overlay
-
+from utils.helper import rgb_anno_normalize,  image_overlay
 
 
 def run(backbone, config):
@@ -52,14 +52,12 @@ def run(backbone, config):
     data_list = open(args.path, 'r')
     data_cam = np.array(data_list.read().splitlines())
     data_list.close()
-    print('checking input list...')
-    creat_dir(data_cam, data_root)
 
     i = 1
     for path in data_cam:
         cam_path = os.path.join(data_root, path)
         anno_path = cam_path.replace('.png', '.labels.png')
-        output_path = cam_path.replace('datasets', 'outputs')
+        # output_path = cam_path.replace('datasets', 'outputs')
 
         rgb_name = cam_path.split('/')[-1].split('.')[0]
         anno_name = anno_path.split('/')[-1].split('.')[0]
@@ -68,11 +66,11 @@ def run(backbone, config):
         rgb = Image.open(cam_path).convert('RGB')
         anno = Image.open(anno_path)
 
-        rgb_normlizer, anno_resizer = rgb_anno_normalize(rgb, config, norm=True)
+        rgb_normlizer, anno_resizer = helper.rgb_anno_normalize(rgb, config, norm=True)
         rgb_norm = rgb_normlizer(rgb).to(device, non_blocking=True)
         anno_resize = anno_resizer(anno).to(device, non_blocking=True)
 
-        rgb_resizer, _ = rgb_anno_normalize(rgb, config, norm=False)
+        rgb_resizer, _ = helper.rgb_anno_normalize(rgb, config, norm=False)
         rgb_resize = rgb_resizer(rgb)
         rgb_resize = rgb_resize.detach().numpy()
         rgb_resize = np.moveaxis(rgb_resize, 0, -1) * 255
@@ -89,19 +87,14 @@ def run(backbone, config):
                 output = model(rgb_norm)
                 output = output.cpu().numpy() if output.is_cuda else output.detach().numpy()
                 output = np.squeeze(output)
-                output = output / np.max(output + 1e-6) * 255
 
-                #heat_map = cv2.applyColorMap(np.asarray(output), cv2.COLORMAP_HOT)
-                heat_map = cv2.resize(output, (config['mlnet_input_size']), interpolation=cv2.INTER_LINEAR)
-                heat_map = np.tile(np.expand_dims(np.uint8(heat_map), axis=-1), (1, 1, 3))
-                heat_map = cv2.applyColorMap(heat_map, cv2.COLORMAP_HOT)
+                print(f'Saving heatmap results {i}...', end='\r', flush=True)
+                #  Save grayscale and overlay
+                helper.save_heatmap(output, rgb_resize, config['mlnet_input_size'], cam_path)
 
-                # print(heat_map.shape)
-                overlay = image_overlay(np.uint8(rgb_resize), heat_map)
-                print(f'saving overlay result {i}...', end='\r', flush=True)
-                # plt.imshow(overlay)
-                # plt.show()
-                cv2.imwrite(output_path, overlay)
+                # print('Attention Grid....')
+                # TODO: from here implement the attention griding things.
+
 
         elif backbone == 'tasednet':
             return

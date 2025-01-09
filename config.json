@@ -7,6 +7,12 @@
   "mlnet_input_size": [640, 480],
   "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pth",
   "mlnet_pred_saving_path": "",
+  "attention_grid": {
+    "width": 53,
+    "height": 120,
+    "grid_left_top_coord":[[128, 216], [181, 216], [234, 216], [352, 216], [405, 216], [450, 216]],
+    "threshold": 0.2
+  },
   "Dataset": {
     "name": "smirk",
     "transforms": {

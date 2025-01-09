@@ -4,6 +4,7 @@
 import os
 import cv2
 import torch
+import numpy as np
 from torchvision.transforms import v2
 
 
@@ -68,6 +69,32 @@ def rgb_anno_normalize(rgb, config, norm=True):
     return rgb_normalize, anno_resize
 
 
+def save_heatmap(heatmap, rgb_img, size, save_path):
+    """
+    Save the neural network's heatmap output as single PNG for visualization.
+    Save two kinds of result, one is grayscale and one is overlaying.
+    Same path and directory tree as the input.
+    :param size: input size as defined in config
+    :param heatmap: float32 HxWx1
+    :return:
+    """
+    heatmap = heatmap / np.max(heatmap + 1e-6) * 255
+    heatmap = cv2.resize(heatmap, size, interpolation=cv2.INTER_LINEAR)
+    heatmap = np.tile(np.expand_dims(np.uint8(heatmap), axis=-1), (1, 1, 3))
+    grayscale_path = save_path.replace('datasets/smirk', 'outputs/smirk_heatmap')
+    if not os.path.exists(os.path.dirname(grayscale_path)):
+        os.makedirs(os.path.dirname(grayscale_path))
+    cv2.imwrite(grayscale_path, heatmap)
+
+    heatmap_color = cv2.applyColorMap(heatmap, cv2.COLORMAP_HOT)
+    overlay = image_overlay(np.uint8(rgb_img), heatmap_color)
+    overlay = cv2.cvtColor(overlay, cv2.COLOR_BGR2RGB)
+    overlay_path = save_path.replace('datasets/smirk', 'outputs/smirk_overlay')
+    if not os.path.exists(os.path.dirname(overlay_path)):
+        os.makedirs(os.path.dirname(overlay_path))
+    cv2.imwrite(overlay_path, overlay)
+
+
 def image_overlay(image, layer_image):
     alpha = 0.3  # how much transparency to apply
     beta = 1 - alpha  # alpha + beta should equal 1
@@ -75,16 +102,16 @@ def image_overlay(image, layer_image):
     cv2.addWeighted(layer_image, alpha, image, beta, gamma, image)
     return image
 
-
-def creat_dir(data_list, root_path):
-    """
-    :param root_path: the root path for different dataset
-    :param data_list: The array of all files
-    """
-    for path in data_list:
-        file_path = os.path.join(root_path, path).replace('datasets', 'outputs')
-        dir_path = os.path.dirname(file_path)
-        if not os.path.exists(dir_path):
-            os.makedirs(dir_path)
+#
+# def creat_dir(data_list, root_path):
+#     """
+#     :param root_path: the root path for different dataset
+#     :param data_list: The array of all files
+#     """
+#     for path in data_list:
+#         file_path = os.path.join(root_path, path).replace('datasets', 'outputs')
+#         dir_path = os.path.dirname(file_path)
+#         if not os.path.exists(dir_path):
+#             os.makedirs(dir_path)
 
 
