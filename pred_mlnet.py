@@ -17,6 +17,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 import utils.helper as helper
+import utils.attention_grid as attention_grid
 from models.mlnet.mlnet import MLnet
 from utils.helper import rgb_anno_normalize,  image_overlay
 
@@ -92,8 +93,8 @@ def run(backbone, config):
                 #  Save grayscale and overlay
                 helper.save_heatmap(output, rgb_resize, config['mlnet_input_size'], cam_path)
 
-                # print('Attention Grid....')
-                # TODO: from here implement the attention griding things.
+                print('Attention Grid....')
+                roi_mean_values = attention_grid(output, config)
 
 
         elif backbone == 'tasednet':

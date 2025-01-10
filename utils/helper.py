@@ -74,6 +74,8 @@ def save_heatmap(heatmap, rgb_img, size, save_path):
     Save the neural network's heatmap output as single PNG for visualization.
     Save two kinds of result, one is grayscale and one is overlaying.
     Same path and directory tree as the input.
+    :param save_path: the cam_path, need replacement
+    :param rgb_img: resized and padded rgb
     :param size: input size as defined in config
     :param heatmap: float32 HxWx1
     :return:
