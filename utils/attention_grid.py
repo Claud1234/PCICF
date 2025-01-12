@@ -11,7 +11,7 @@ import sys
 import numpy as np
 
 
-def attention_grid(heatmap, config):
+def roi_values(heatmap, config):
     roi_left_top_all = np.array(config['attention_grid']['grid_left_top_coord']).transpose()
     roi_right_all = roi_left_top_all[0] + config['attention_grid']['width']
     roi_bottom_all = roi_left_top_all[1] + config['attention_grid']['height']
@@ -23,7 +23,7 @@ def attention_grid(heatmap, config):
     roi_mean_values = np.zeros(len(roi_right_all))
     for i in range(len(roi_right_all)):
         roi_mean_values[i] = np.mean(heatmap[roi_left_top_all[1][i]:roi_bottom_all[i],
-                         roi_left_top_all[0][i]:roi_right_all[i]])
+                                             roi_left_top_all[0][i]:roi_right_all[i]])
 
     return roi_mean_values
 
