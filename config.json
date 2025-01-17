@@ -5,7 +5,7 @@
         "batch_size":24
     },
   "mlnet_input_size": [640, 480],
-  "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pth",
+  "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pth",d
   "mlnet_pred_saving_path": "",
   "attention_grid": {
     "width": 53,

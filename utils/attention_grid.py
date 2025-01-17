@@ -12,6 +12,12 @@ import numpy as np
 
 
 def roi_values(heatmap, config):
+    """
+    select ther ROI regions defined in config.json and compute np.mean()
+    :param heatmap: cpu().numpy() array which (h/8, w/8).float32 from mlnet prediction
+    :param config: config.json. For getting to know the regions' coordinates.
+    :return: mean values (float32) for each ROI region.
+    """
     roi_left_top_all = np.array(config['attention_grid']['grid_left_top_coord']).transpose()
     roi_right_all = roi_left_top_all[0] + config['attention_grid']['width']
     roi_bottom_all = roi_left_top_all[1] + config['attention_grid']['height']
