@@ -4,3 +4,5 @@ smirk/
 *.pth
 *.png
 *.pdf
+*.pkl
+.ipynb_checkpoints
