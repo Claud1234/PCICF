@@ -4,14 +4,12 @@
 The script to read frame from smirk dataset, mirror the pedestrian (smirk only has single pedestrian),
 then save the result to have 'synthetic' multi-pedestrian sequence.
 
-Created on 12nd Jan, 2025
+Created on 12nd Feb, 2025
 """
 
 import os
 import sys
 import cv2
-import argparse
-
 import numpy as np
 
 
