@@ -10,17 +10,20 @@ import cv2
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('../test.csv')
+df = pd.read_csv('./test.csv')
 print(df)
-seq_path = '9jJxC2pmKULPI8arYKQ5O'
+seq_path = 'N09pgUrFChEH8GM6APzJ0'
 
 for i in range(100):
-    blankimg = np.zeros((480, 752, 3), np.uint8)
-    blankimg_file = 'cam' + '%06d' % i + '.png'
-    blankimg_path = os.path.join('../datasets/smirk_custom_ped/child/', seq_path, blankimg_file)
-    if not os.path.exists(os.path.dirname(blankimg_path)):
-        os.makedirs(os.path.dirname(blankimg_path))
-    cv2.imwrite(blankimg_path, blankimg)
+    env_img = cv2.resize(cv2.imread('../datasets/empty_smirk_roi_draw.png'), (640, 480))
+    anno_img = np.zeros_like(env_img)
+    envimg_file = 'cam' + '%06d' % i + '.png'
+    envimg_path = os.path.join('../datasets/better_smirk/two_cells_three_gaps', envimg_file)
+    annoimg_path = envimg_path.replace('.png', '.labels.png')
+    if not os.path.exists(os.path.dirname(envimg_path)):
+        os.makedirs(os.path.dirname(envimg_path))
+    cv2.imwrite(envimg_path, env_img)
+    #cv2.imwrite(annoimg_path, anno_img)
 
 for idx, row in df.iterrows():
     start_x = row['start_x']
@@ -32,13 +35,19 @@ for idx, row in df.iterrows():
     y_interval = int(abs(row['start_y'] - row['end_y']) / frame_length)
 
     for i in range(frame_length+1):
+        print(i)
         rgb_file = 'cam' + '%06d' % (row['start_frame'] + i) + '.png'
-        rgb_path = os.path.join('../datasets/smirk/child/', seq_path, rgb_file)
+        rgb_path = os.path.join('../datasets/smirk/', seq_path, rgb_file)
         anno_path = rgb_path.replace('.png', '.labels.png')
-        blank_path = rgb_path.replace('smirk', 'smirk_custom_ped')
-        blank_img = cv2.imread(blank_path)
+        result_rgb_path = os.path.join('../datasets/better_smirk/two_cells_three_gaps', rgb_file)
+        result_anno_path = result_rgb_path.replace('.png', '.labels.png')
+        env_img = cv2.imread(result_rgb_path)
         bgr = cv2.imread(rgb_path)
+        bgr = cv2.resize(bgr, (640, 480))
+        anno = cv2.imread(anno_path)
+        anno = cv2.resize(anno, (640, 480))
         anno_gray = cv2.imread(anno_path, cv2.IMREAD_GRAYSCALE)
+        anno_gray = cv2.resize(anno_gray, (640, 480))
         ret, anno_binary = cv2.threshold(anno_gray, 0, 255, cv2.THRESH_BINARY)
 
         mask_binary = anno_binary == 255
@@ -64,10 +73,12 @@ for idx, row in df.iterrows():
         else:
             cord_y = start_y + y_interval * i
             cord_x = start_x + x_interval * i
-        blank_img[cord_y:cord_y+h, cord_x:cord_x+w, :] = blank_img[cord_y:cord_y+h, cord_x:cord_x+w, :] * \
+        env_img[cord_y:cord_y+h, cord_x:cord_x+w, :] = env_img[cord_y:cord_y+h, cord_x:cord_x+w, :] * \
             ~bbox_binary_bool_stack + bbox_black_bg
-        # TODO: add anno for smirk_custom_ped
-        # new_anno_path = anno_path.replace('smirk', 'smirk_custom_ped')
-        cv2.imwrite(blank_path, blank_img)
-        # cv2.imwrite(new_anno_path, new_anno_3_channel)
+
+        #result_anno = cv2.imread(result_anno_path)
+        #result_anno[cord_y:cord_y+h, cord_x:cord_x+w, :] = anno[min_y:max_y, min_x:max_x, :]
+
+        cv2.imwrite(result_rgb_path, env_img)
+        #cv2.imwrite(result_anno_path, result_anno)
 
