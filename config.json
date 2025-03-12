@@ -5,12 +5,12 @@
         "batch_size":24
     },
   "mlnet_input_size": [640, 480],
-  "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pth",d
+  "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pth",
   "mlnet_pred_saving_path": "",
   "attention_grid": {
-    "width": 53,
+    "width": 60,
     "height": 120,
-    "grid_left_top_coord":[[128, 216], [181, 216], [234, 216], [352, 216], [405, 216], [458, 216]],
+    "grid_left_top_coord":[[120, 200], [180, 200], [240, 200], [340, 200], [400, 200], [460, 200]],
     "threshold": 0.2
   },
   "Dataset": {
@@ -18,6 +18,16 @@
     "transforms": {
       "image_mean": [0.485, 0.456, 0.406],
       "image_std": [0.229, 0.224, 0.225]
+    }
+  },
+  "Morton_Detect": {
+    "cell_ranges": {
+      "0": [2.7e-07, 5.5e-07],
+      "1": [0.65e-06, 1.0e-06],
+      "2": [1.44e-06, 1.84e-06],
+      "3": [3.1e-06, 3.5e-06],
+      "4": [6.3e-06, 6.8e-06],
+      "5": [1.28e-05, 1.34e-05]
     }
   }
 }
