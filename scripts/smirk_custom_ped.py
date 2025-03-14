@@ -12,18 +12,19 @@ import pandas as pd
 
 df = pd.read_csv('./test.csv')
 print(df)
-seq_path = 'N09pgUrFChEH8GM6APzJ0'
+seq_path = 'bvxX8wKbuEo8sDDkWkZFd'
 
 for i in range(100):
-    env_img = cv2.resize(cv2.imread('../datasets/empty_smirk_roi_draw.png'), (640, 480))
+    #env_img = cv2.resize(cv2.imread('../datasets/empty_smirk_roi_draw.png'), (640, 480))
+    env_img = cv2.resize(cv2.imread('../datasets/empty_smirk.png'), (640, 480))
     anno_img = np.zeros_like(env_img)
     envimg_file = 'cam' + '%06d' % i + '.png'
-    envimg_path = os.path.join('../datasets/better_smirk/two_cells_three_gaps', envimg_file)
+    envimg_path = os.path.join('../datasets/better_smirk/right2left/three_cells/sq_00', envimg_file)
     annoimg_path = envimg_path.replace('.png', '.labels.png')
     if not os.path.exists(os.path.dirname(envimg_path)):
         os.makedirs(os.path.dirname(envimg_path))
     cv2.imwrite(envimg_path, env_img)
-    #cv2.imwrite(annoimg_path, anno_img)
+    cv2.imwrite(annoimg_path, anno_img)
 
 for idx, row in df.iterrows():
     start_x = row['start_x']
@@ -31,15 +32,15 @@ for idx, row in df.iterrows():
     start_y = row['start_y']
     end_y = row['end_y']
     frame_length = row['end_frame'] - row['start_frame']
-    x_interval = int(abs(row['start_x'] - row['end_x']) / frame_length)
-    y_interval = int(abs(row['start_y'] - row['end_y']) / frame_length)
+    x_interval = abs(row['start_x'] - row['end_x']) / frame_length
+    y_interval = abs(row['start_y'] - row['end_y']) / frame_length
 
     for i in range(frame_length+1):
         print(i)
         rgb_file = 'cam' + '%06d' % (row['start_frame'] + i) + '.png'
-        rgb_path = os.path.join('../datasets/smirk/', seq_path, rgb_file)
+        rgb_path = os.path.join('../datasets/smirk', seq_path, rgb_file)
         anno_path = rgb_path.replace('.png', '.labels.png')
-        result_rgb_path = os.path.join('../datasets/better_smirk/two_cells_three_gaps', rgb_file)
+        result_rgb_path = os.path.join('../datasets/better_smirk/right2left/three_cells/sq_00', rgb_file)
         result_anno_path = result_rgb_path.replace('.png', '.labels.png')
         env_img = cv2.imread(result_rgb_path)
         bgr = cv2.imread(rgb_path)
@@ -68,17 +69,17 @@ for idx, row in df.iterrows():
         h, w = bbox_black_bg.shape[0], bbox_black_bg.shape[1]
 
         if start_x > end_x:
-            cord_y = start_y - y_interval * i
-            cord_x = start_x - x_interval * i
+            cord_y = int(start_y - y_interval * i)
+            cord_x = int(start_x - x_interval * i)
         else:
-            cord_y = start_y + y_interval * i
-            cord_x = start_x + x_interval * i
+            cord_y = int(start_y + y_interval * i)
+            cord_x = int(start_x + x_interval * i)
         env_img[cord_y:cord_y+h, cord_x:cord_x+w, :] = env_img[cord_y:cord_y+h, cord_x:cord_x+w, :] * \
             ~bbox_binary_bool_stack + bbox_black_bg
 
-        #result_anno = cv2.imread(result_anno_path)
-        #result_anno[cord_y:cord_y+h, cord_x:cord_x+w, :] = anno[min_y:max_y, min_x:max_x, :]
+        result_anno = cv2.imread(result_anno_path)
+        result_anno[cord_y:cord_y+h, cord_x:cord_x+w, :] = anno[min_y:max_y, min_x:max_x, :]
 
         cv2.imwrite(result_rgb_path, env_img)
-        #cv2.imwrite(result_anno_path, result_anno)
+        cv2.imwrite(result_anno_path, result_anno)
 
