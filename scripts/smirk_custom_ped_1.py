@@ -12,19 +12,22 @@ import pandas as pd
 
 df = pd.read_csv('./test.csv')
 print(df)
-seq_path = 'N09pgUrFChEH8GM6APzJ0'
+seq_path = 'aITx4TyRncKnardhTgCzz'
 
 for i in range(100):
-    env_img = cv2.resize(cv2.imread('../datasets/empty_smirk_roi_draw.png'), (640, 480))
+    env_file_name = 'cam' + '%06d' % i + '.png'
+    env_path = os.path.join('../datasets/better_smirk/raw_data/left2right/two_cells/sq_01', env_file_name)
+    env_img = cv2.imread(env_path)
     #env_img = cv2.resize(cv2.imread('../datasets/empty_smirk.png'), (640, 480))
-    anno_img = np.zeros_like(env_img)
-    envimg_file = 'cam' + '%06d' % i + '.png'
-    envimg_path = os.path.join('../datasets/better_smirk/raw_data/left2right/three_cells/sq_02', envimg_file)
-    annoimg_path = envimg_path.replace('.png', '.labels.png')
-    if not os.path.exists(os.path.dirname(envimg_path)):
-        os.makedirs(os.path.dirname(envimg_path))
-    cv2.imwrite(envimg_path, env_img)
-    cv2.imwrite(annoimg_path, anno_img)
+    anno_path = env_path.replace('.png', '.labels.png')
+    anno_img = cv2.imread(anno_path)
+
+    final_result_path = os.path.join('../datasets/better_smirk/raw_data/both_sides/sq_00', env_file_name)
+    final_anno_path = final_result_path.replace('.png', '.labels.png')
+    if not os.path.exists(os.path.dirname(final_result_path)):
+        os.makedirs(os.path.dirname(final_result_path))
+    cv2.imwrite(final_result_path, env_img)
+    cv2.imwrite(final_anno_path, anno_img)
 
 for idx, row in df.iterrows():
     start_x = row['start_x']
@@ -40,7 +43,7 @@ for idx, row in df.iterrows():
         rgb_file = 'cam' + '%06d' % (row['start_frame'] + i) + '.png'
         rgb_path = os.path.join('../datasets/smirk', seq_path, rgb_file)
         anno_path = rgb_path.replace('.png', '.labels.png')
-        result_rgb_path = os.path.join('../datasets/better_smirk/raw_data/left2right/three_cells/sq_02', rgb_file)
+        result_rgb_path = os.path.join('../datasets/better_smirk/raw_data/both_sides/sq_00', rgb_file)
         result_anno_path = result_rgb_path.replace('.png', '.labels.png')
         env_img = cv2.imread(result_rgb_path)
         bgr = cv2.imread(rgb_path)

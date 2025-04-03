@@ -40,7 +40,7 @@ def overlap(cell_cord, yolo_cord): # [top_left_x, top_left_y, bottom_right_x, bo
     return overlap_area, x_left, y_top, x_right, y_bottom
 
 
-seq_path = '../datasets/better_smirk/left2right/three_cells/sq_00/'
+seq_path = '../datasets/better_smirk/raw_data/both_sides/sq_00/'
 config_path = '../config.json'
 
 with open(config_path, 'r') as _f:
@@ -109,7 +109,7 @@ for anno_frame in sorted(glob.glob(os.path.join(seq_path, '*.labels.png'))):
 morton_codes = pd.DataFrame(morton_codes, columns=['frame', 'morton'])
 sfc_input = pd.DataFrame(sfc_input, columns=['frame', 'cell_0', 'cell_1', 'cell_2',
                                                       'cell_3', 'cell_4', 'cell_5'])
-morton_codes_path = '../outputs/morton_codes_betterSMIRK/left2right/three_cell_sq00.csv'
+morton_codes_path = '../outputs/morton_codes_betterSMIRK/both_sides/sq00.csv'
 if not os.path.exists(os.path.dirname(morton_codes_path)):
     os.makedirs(os.path.dirname(morton_codes_path))
 morton_codes.to_csv(morton_codes_path, sep=';', index=False)
@@ -119,7 +119,7 @@ if not os.path.exists(os.path.dirname(sfc_input_path)):
     os.makedirs(os.path.dirname(sfc_input_path))
 sfc_input.to_csv(sfc_input_path, sep=';', index=False)
 
-morton_codes_seq = pd.read_csv('../outputs/morton_codes_betterSMIRK/left2right/three_cell_sq00.csv', sep=';')
+morton_codes_seq = pd.read_csv('../outputs/morton_codes_betterSMIRK/both_sides/sq00.csv', sep=';')
 morton_codes_seq = morton_codes_seq.to_numpy()
 mortons_seq = []
 for i in range(len(morton_codes_seq)):
@@ -139,7 +139,7 @@ for frame_id in range(len(mortons_seq)):
     ax2.scatter(x, y, s=5, color='green')
     ax2.set_ylabel("Frame Number")
 
-mortons_seq_chart_path = '../outputs/morton_charts_betterSMIRK/left2right/three_cell_sq00.png'
+mortons_seq_chart_path = '../outputs/morton_charts_betterSMIRK/both_sides/sq00.png'
 if not os.path.exists(os.path.dirname(mortons_seq_chart_path)):
     os.makedirs(os.path.dirname(mortons_seq_chart_path))
 fig.savefig(mortons_seq_chart_path)

@@ -1,0 +1,1107 @@
+- id: "output_008"
+  event_window: [571, 697]
+  type: right
+- id: "output_009"
+  event_window: [50, 210]
+  type: right
+- id: "output_011"
+  event_window: [470, 510]
+  type: right
+- id: "output_011"
+  event_window: [621, 731]
+  type: right
+- id: "output_011"
+  event_window: [805, 892]
+  type: right
+- id: "output_012"
+  event_window: [160, 230]
+  type: left
+- id: "output_012"
+  event_window: [640, 720]
+  type: right
+- id: "output_012"
+  event_window: [704, 790]
+  type: left
+- id: "output_012"
+  event_window: [762, 657]
+  type: left
+- id: "output_013"
+  event_window: [84, 153]
+  type: left
+- id: "output_017"
+  event_window: [503, 593]
+  type: left
+- id: "output_017"
+  event_window: [607, 744]
+  type: left
+- id: "output_017"
+  event_window: [805, 889]
+  type: right
+- id: "output_018"
+  event_window: [616, 636]
+  type: left
+- id: "output_021"
+  event_window: [139, 200] #225
+  type: right
+- id: "output_024"
+  event_window: [782, 893]
+  type: right
+- id: "output_025"
+  event_window: [210, 291]
+  type: left
+- id: "output_030"
+  event_window: [536, 674]
+  type: right
+- id: "output_031"
+  event_window: [1, 150]
+  type: right
+- id: "output_031"
+  event_window: [40, 174]
+  type: left
+- id: "output_031"
+  event_window: [40, 196]
+  type: left
+- id: "output_031"
+  event_window: [89, 218]
+  type: left
+- id: "output_031"
+  event_window: [89, 218]
+  type: left
+- id: "output_031"
+  event_window: [129, 253]
+  type: left
+- id: "output_034"
+  event_window: [249, 296]
+  type: left
+- id: "output_034"
+  event_window: [463, 602]
+  type: left
+- id: "output_034"
+  event_window: [631, 758]
+  type: left
+- id: "output_037"
+  event_window: [434, 637]
+  type: left
+- id: "output_038"
+  event_window: [232, 479]
+  type: left
+- id: "output_039"
+  event_window: [579, 642]
+  type: left
+- id: "output_040"
+  event_window: [340, 479]
+  type: right
+- id: "output_041"
+  event_window: [634, 732]
+  type: right
+- id: "output_041"
+  event_window: [860, 887]
+  type: left
+- id: "output_045"
+  event_window: [343, 410]
+  type: right
+- id: "output_048"
+  event_window: [1, 274]
+  type: left
+- id: "output051"
+  event_window: [692, 838]
+  type: left
+- id: "output053"
+  event_window: [503, 736]
+  type: right
+- id: "output054"
+  event_window: [243, 488]
+  type: right
+- id: "output055"
+  event_window: [85, 253]
+  type: right
+- id: "output072"
+  event_window: [484, 644]
+  type: right
+- id: "output075"
+  event_window: [636, 769]
+  type: right
+- id: "output003"
+  event_window: [502, 631] #far
+  type: right
+- id: "output003"
+  event_window: [572, 690]
+  type: left
+- id: "output003"
+  event_window: [822, 892]
+  type: left
+- id: "output008"
+  event_window: [113, 187]
+  type: right
+- id: "output014"
+  event_window: [456, 501]
+  type: right
+- id: "output017"
+  event_window: [760, 824]
+  type: right
+- id: "output023"
+  event_window: [1, 616] #multi-crossing
+  type: right
+- id: "output024"
+  event_window: [49, 247] # 2 crossing at the same time
+  type: right
+- id: "output024"
+  event_window: [123, 217] # 2 crossing
+  type: right
+- id: "output024"
+  event_window: [434, 573] #
+  type: left
+- id: "output024"
+  event_window: [593, 723]
+  type: right
+- id: "output024"
+  event_window: [714, 828]
+  type: right
+- id: "output025"
+  event_window: [551, 876] #multi
+  type: left
+- id: "output027"
+  event_window: [543, 680] #far
+  type: right
+- id: "output029"
+  event_window: [456, 599] # 2 crossing
+  type: right
+- id: "output029"
+  event_window: [527, 650] # 2 crossing
+  type: right
+- id: "output030"
+  event_window: [64, 201]
+  type: right
+- id: "output030"
+  event_window: [288, 341] #cycle
+  type: left
+- id: "output030"
+  event_window: [690, 770] #cycle
+  type: left
+- id: "output031"
+  event_window: [677, 788]
+  type: right
+- id: "output032"
+  event_window: [55, 167]
+  type: left
+- id: "output033"
+  event_window: [344, 556]
+  type: right
+- id: "output038"
+  event_window: [320, 497]
+  type: left
+- id: "output041"
+  event_window: [86, 186]
+  type: left
+- id: "output041"
+  event_window: [225, 767] #multi
+  type: left
+- id: "output044"
+  event_window: [278, 329]
+  type: right
+- id: "output276"
+  event_window: [22, 87]
+  type: left
+- id: "output276"
+  event_window: [94, 892]
+  type: multi
+- id: "output280"
+  event_window: [280, 419]
+  type: right
+- id: "output281"
+  event_window: [171, 375] #far3 cellsonly
+  type: left
+#- id: "output281"
+#  event_window: [758, 891]
+#  type: right
+- id: "output282"
+  event_window: [1, 166]
+  type: right
+- id: "output291"
+  event_window: [339, 524]
+  type: right
+- id: "output291"
+  event_window: [529, 695]
+  type: left
+- id: "output292"
+  event_window: [1, 194]
+  type: left
+- id: "output292"
+  event_window: [109, 357]
+  type: left
+- id: "output292"
+  event_window: [300, 429]
+  type: left
+- id: "output292"
+  event_window: [656, 807]
+  type: right
+#- id: "output293"
+#  event_window: [614, 715] #far3cells
+#  type: right
+#- id: "output293"
+#  event_window: [743, 879] #far3cells
+#  type: left
+#- id: "output294"
+#  event_window: [1, 160] #far3cells
+#  type: right
+- id: "output296"
+  event_window: [65, 229]
+  type: right
+- id: "output302"
+  event_window: [1, 152] #cyc
+  type: right
+#- id: "output311"
+#  event_window: [139, 210] #irrelvent
+#  type: right
+- id: "output311"
+  event_window: [442, 548]
+  type: right
+#- id: "output311"
+#  event_window: [616, 794] #far
+#  type: right
+- id: "output313"
+  event_window: [1, 101]
+  type: left
+- id: "output319"
+  event_window: [349, 553]
+  type: right
+- id: "output572"
+  event_window: [1, 132]
+  type: left
+#- id: "output565"
+ #event_window: [625, 867] #far
+ # type: right
+- id: "output558"
+  event_window: [261, 477]
+  type: right
+- id: "output555"
+  event_window: [1, 144]
+  type: left
+#- id: "output547"
+ #event_window: [182, 327] #far
+ # type: right
+- id: "output546"
+  event_window: [440, 590]
+  type: right
+- id: "output544"
+  event_window: [542, 638]
+  type: left
+- id: "output543"
+  event_window: [522, 821] #multi
+  type: left
+#- id: "output541"
+ # event_window: [285, 405] #far
+ # type: right
+- id: "output540"
+  event_window: [96, 507]
+  type: multi
+- id: "output537"
+  event_window: [1, 240]
+  type: multi
+#- id: "output536"
+ #event_window: [438, 588] #far
+ # type: right
+- id: "output531"
+  event_window: [33, 181]
+  type: right
+- id: "output525"
+  event_window: [1, 234]
+  type: left
+- id: "output488"
+  event_window: [745, 899]
+  type: right
+- id: "output486"
+  event_window: [1, 64] #cycle
+  type: left
+#- id: "output483"
+   #event_window: [361, 525] #far
+   #type: left
+#- id: "output483"
+   #event_window: [1, 157] #occluded
+   #type: left
+#- id: "output482"
+   #event_window: [692, 898] #far
+   #type: left
+#- id: "output476"
+   #event_window: [18, 258] #farcycle
+   #type: right
+- id: "output474"
+  event_window: [1, 269]
+  type: right
+#- id: "output475"
+  #event_window: [159, 344] #far
+  #type: right
+- id: "output473"
+  event_window: [405, 644]
+  type: right
+- id: "output472"
+  event_window: [463, 557]
+  type: left
+- id: "output458"
+  event_window: [132, 431]
+  type: right
+- id: "output449"
+  event_window: [546, 773]
+  type: left
+#- id: "output445"
+#  event_window: [355, 559] #far
+#  type: right
+- id: "output445"
+  event_window: [472 , 895]
+  type: left
+- id: "output439"
+  event_window: [82, 250]
+  type: right
+- id: "output439"
+  event_window: [190, 365]
+  type: left
+#- id: "output437"
+#  event_window: [278, 381] #occluded
+#  type: left
+#- id: "output437"
+#  event_window: [684, 863] #far
+#  type: left
+- id: "output436"
+  event_window: [1, 176] #cycle
+  type: right
+- id: "output430"
+  event_window: [192, 538]
+  type: left
+- id: "output430"
+  event_window: [520, 752]
+  type: left
+#- id: "output428"
+#  event_window: [461, 699] #far
+#  type: left
+- id: "output425"
+  event_window: [278, 423]
+  type: right
+- id: "output420"
+  event_window: [335, 408]
+  type: left
+- id: "output419"
+  event_window: [230, 584]
+  type: left
+- id: "output418"
+  event_window: [404, 899] #Cmulti
+  type: left
+- id: "output417"
+  event_window: [393, 595]
+  type: left
+- id: "output409"
+  event_window: [567, 822] #multi409
+  type: left
+- id: "output407"
+  event_window: [391, 449] #motocycle
+  type: left
+- id: "output404"
+  event_window: [174, 449] #multi
+  type: left
+- id: "output402"
+  event_window: [534, 654]
+  type: right
+- id: "output391"
+  event_window: [73, 181]
+  type: right
+- id: "output391"
+  event_window: [181, 271]
+  type: right
+- id: "output391"
+  event_window: [270, 347]
+  type: left
+- id: "output391"
+  event_window: [348, 437]
+  type: left
+- id: "output390"
+  event_window: [538, 693]
+  type: right
+- id: "output390"
+  event_window: [771, 892]
+  type: right
+- id: "output387"
+  event_window: [54, 190]
+  type: left
+#- id: "output387"
+#  event_window: [374, 600]#far
+# type: left
+- id: "output385"
+  event_window: [12, 180]
+  type: left
+- id: "output385"
+  event_window: [516, 646]
+  type: right
+- id: "output385"
+  event_window: [184, 572] #multi
+  type: right
+- id: "output385"
+  event_window: [764, 859]
+  type: left
+- id: "output384"
+  event_window: [533, 721]
+  type: left
+- id: "output384"
+  event_window: [1, 160] #multi
+  type: left
+- id: "output383"
+  event_window: [1, 75]
+  type: right
+- id: "output383"
+  event_window: [724, 899] #multi
+  type: right
+- id: "output381"
+  event_window: [1, 132]
+  type: left
+- id: "output379"
+  event_window: [111, 441] #multiandfar
+  type: left
+- id: "output378"
+  event_window: [70, 175]
+  type: right
+- id: "output378"
+  event_window: [150, 294] #multi
+  type: right
+- id: "output378"
+  event_window: [474, 561]
+  type: left
+- id: "output377"
+  event_window: [91, 671] #multi
+  type: left
+#- id: "output376"
+#  event_window: [98, 321]#far
+#  type: right
+#- id: "output374"
+#  event_window: [481, 656]#farand occ
+#  type: right
+#- id: "output374"
+#  event_window: [752, 862]#far
+#  type: right
+#- id: "output373"
+#  event_window: [147, 347]#multi
+#  type: right
+#- id: "output369"
+#  event_window: [705, 900]#multi
+#  type: right
+#- id: "output363"
+#  event_window: [108, 350]#far
+#  type: right
+#- id: "output361"
+#  event_window: [25, 180]#far
+#  type: left
+- id: "output361"
+  event_window: [642, 684] #motocycle
+  type: left
+- id: "output360"
+  event_window: [335, 443]
+  type: left
+- id: "output359"
+  event_window: [112, 216]
+  type: left
+- id: "output359"
+  event_window: [1, 162] #multi
+  type: left
+- id: "output358"
+  event_window: [250, 341]
+  type: right
+- id: "output358"
+  event_window: [705, 892] #multi
+  type: right
+- id: "output355"
+  event_window: [323, 469] #multi
+  type: right
+#- id: "output355"
+#  event_window: [660, 837]#far
+#  type: left
+- id: "output350"
+  event_window: [520, 795] #multi
+  type: right
+- id: "output349"
+  event_window: [38, 164]
+  type: left
+#- id: "output348"
+#  event_window: [287, 465]#far
+#  type: right
+#- id: "output348"
+#  event_window: [681 , 842]#far
+#  type: left
+- id: "output347"
+  event_window: [86, 175]
+  type: right
+- id: "output346"
+  event_window: [252, 700] #multi
+  type: right
+- id: "output345"
+  event_window: [245, 477]
+  type: left
+- id: "output345"
+  event_window: [501, 587] #cycle
+  type: left
+- id: "output342"
+  event_window: [564, 779] #funny
+  type: right
+- id: "output342"
+  event_window: [720, 890]
+  type: left
+- id: "output051"
+  event_window: [692, 838]
+  type: left
+- id: "output053"
+  event_window: [503, 736] #far
+  type: right
+- id: "output054"
+  event_window: [243, 488] #far
+  type: right
+- id: "output055"
+  event_window: [85, 253] #multi
+  type: right
+- id: "output072"
+  event_window: [484, 644]
+  type: right
+- id: "output075"
+  event_window: [636, 769]
+  type: right
+- id: "output096"
+  event_window: [432, 599]
+  type: right
+#- id: "output096"
+#  event_window: [714, 860] #far
+#  type: right
+#- id: "output101"
+#  event_window: [105, 545] #far
+#  type: multi
+- id: "output103"
+  event_window: [340, 398]
+  type: left
+- id: "output103"
+  event_window: [403, 530]
+  type: left
+#- id: "output104"
+#  event_window: [505, 738] #far
+#  type: multi
+- id: "output105"
+  event_window: [107, 178]
+  type: left
+#- id: "output106"
+#  event_window: [817, ]#cropped
+#  type: left
+- id: "output108"
+  event_window: [192, 372]
+  type: left
+- id: "output108"
+  event_window: [403, 658]
+  type: left
+#- id: "output109"
+#  event_window: [463, 655]#far
+#  type: left
+- id: "output110"
+  event_window: [81, 177]
+  type: right
+#- id: "output111"
+#  event_window: [174, 485]#far
+#  type: right
+#- id: "output111"
+#  event_window: [186, 566]#far
+#  type: left
+#- id: "output112"
+#  event_window: [12, 183]#far
+#  type: right
+#- id: "output112"
+#  event_window: [272, 483]#far
+#  type: right
+- id: "output113"
+  event_window: [300, 440]
+  type: left
+#- id: "output113"
+#  event_window: [676]#far
+#  type: right
+- id: "output116"
+  event_window: [129, 247]
+  type: right
+- id: "output124"
+  event_window: [653, 860] #can also multi
+  type: left
+- id: "output128"
+  event_window: [101, 232]
+  type: right
+- id: "output133"
+  event_window: [140, 214]
+  type: right
+- id: "output135"
+  event_window: [683, 791]
+  type: right
+- id: "output140"
+  event_window: [349, 509]
+  type: left
+- id: "output150"
+  event_window: [46, 213]
+  type: left
+- id: "output150"
+  event_window: [164, 309]
+  type: left
+- id: "output161"
+  event_window: [497, 654]
+  type: right
+- id: "output161"
+  event_window: [654, 871]
+  type: left
+#- id: "output161"
+#  event_window: [1, 178]
+#  type: right
+#- id: "output180"
+#  event_window: [479, 794] #can be multi single
+#  type: multi
+- id: "output180"
+  event_window: [618, 725] #can be multi single
+  type: left
+- id: "output217"
+  event_window: [1, 250]
+  type: multi
+- id: "output234"
+  event_window: [639, 780]
+  type: multi
+- id: "output235"
+  event_window: [1, 298]
+  type: multi
+- id: "output276"
+  event_window: [22, 87]
+  type: left
+- id: "output276"
+  event_window: [94, 892]
+  type: multi
+- id: "output280"
+  event_window: [280, 419]
+  type: right
+- id: "output281"
+  event_window: [171, 375] #far3 cellsonly
+  type: left
+#- id: "output281"
+#  event_window: [758, 891]
+#  type: right
+- id: "output282"
+  event_window: [1, 166]
+  type: right
+- id: "output291"
+  event_window: [339, 524]
+  type: right
+- id: "output291"
+  event_window: [529, 695]
+  type: left
+- id: "output292"
+  event_window: [1, 194]
+  type: left
+- id: "output292"
+  event_window: [109, 357]
+  type: left
+- id: "output292"
+  event_window: [300, 429]
+  type: left
+- id: "output292"
+  event_window: [656, 807]
+  type: right
+#- id: "output293"
+#  event_window: [614, 715] #far3cells
+#  type: right
+#- id: "output293"
+#  event_window: [743, 879] #far3cells
+#  type: left
+#- id: "output294"
+#  event_window: [1, 160] #far3cells
+#  type: right
+- id: "output296"
+  event_window: [65, 229]
+  type: right
+- id: "output302"
+  event_window: [1, 152] #cyc
+  type: right
+#- id: "output311"
+#  event_window: [139, 210] #irrelvent
+#  type: right
+- id: "output311"
+  event_window: [442, 548]
+  type: right
+#- id: "output311"
+#  event_window: [616, 794] #far
+#  type: right
+- id: "output313"
+  event_window: [1, 101]
+  type: left
+- id: "output319"
+  event_window: [349, 553]
+  type: right
+- id: "output572"
+  event_window: [1, 132]
+  type: left
+#- id: "output565"
+ #event_window: [625, 867] #far
+ # type: right
+- id: "output558"
+  event_window: [261, 477]
+  type: right
+- id: "output555"
+  event_window: [1, 144]
+  type: left
+#- id: "output547"
+ #event_window: [182, 327] #far
+ # type: right
+- id: "output546"
+  event_window: [440, 590]
+  type: right
+- id: "output544"
+  event_window: [542, 638]
+  type: left
+- id: "output543"
+  event_window: [522, 821] #multi
+  type: left
+#- id: "output541"
+ # event_window: [285, 405] #far
+ # type: right
+- id: "output540"
+  event_window: [96, 507]
+  type: multi
+- id: "output537"
+  event_window: [1, 240]
+  type: multi
+#- id: "output536"
+ #event_window: [438, 588] #far
+ # type: right
+- id: "output531"
+  event_window: [33, 181]
+  type: right
+- id: "output525"
+  event_window: [1, 234]
+  type: left
+- id: "output488"
+  event_window: [745, 899]
+  type: right
+- id: "output486"
+  event_window: [1, 64] #cycle
+  type: left
+#- id: "output483"
+   #event_window: [361, 525] #far
+   #type: left
+#- id: "output483"
+   #event_window: [1, 157] #occluded
+   #type: left
+#- id: "output482"
+   #event_window: [692, 898] #far
+   #type: left
+#- id: "output476"
+   #event_window: [18, 258] #farcycle
+   #type: right
+- id: "output474"
+  event_window: [1, 269]
+  type: right
+#- id: "output475"
+  #event_window: [159, 344] #far
+  #type: right
+- id: "output473"
+  event_window: [405, 644]
+  type: right
+- id: "output472"
+  event_window: [463, 557]
+  type: left
+- id: "output458"
+  event_window: [132, 431]
+  type: right
+- id: "output449"
+  event_window: [546, 773]
+  type: left
+#- id: "output445"
+#  event_window: [355, 559] #far
+#  type: right
+- id: "output445"
+  event_window: [472 , 895]
+  type: left
+- id: "output439"
+  event_window: [82, 250]
+  type: right
+- id: "output439"
+  event_window: [190, 365]
+  type: left
+#- id: "output437"
+#  event_window: [278, 381] #occluded
+#  type: left
+#- id: "output437"
+#  event_window: [684, 863] #far
+#  type: left
+- id: "output436"
+  event_window: [1, 176] #cycle
+  type: right
+- id: "output430"
+  event_window: [192, 538]
+  type: left
+- id: "output430"
+  event_window: [520, 752]
+  type: left
+#- id: "output428"
+#  event_window: [461, 699] #far
+#  type: left
+- id: "output425"
+  event_window: [278, 423]
+  type: right
+- id: "output420"
+  event_window: [335, 408]
+  type: left
+- id: "output419"
+  event_window: [230, 584]
+  type: left
+- id: "output418"
+  event_window: [404, 899] #Cmulti
+  type: left
+- id: "output417"
+  event_window: [393, 595]
+  type: left
+- id: "output409"
+  event_window: [567, 822] #multi409
+  type: left
+- id: "output407"
+  event_window: [391, 449] #motocycle
+  type: left
+- id: "output404"
+  event_window: [174, 449] #multi
+  type: left
+- id: "output402"
+  event_window: [534, 654]
+  type: right
+- id: "output391"
+  event_window: [73, 181]
+  type: right
+- id: "output391"
+  event_window: [181, 271]
+  type: right
+- id: "output391"
+  event_window: [270, 347]
+  type: left
+- id: "output391"
+  event_window: [348, 437]
+  type: left
+- id: "output390"
+  event_window: [538, 693]
+  type: right
+- id: "output390"
+  event_window: [771, 892]
+  type: right
+- id: "output387"
+  event_window: [54, 190]
+  type: left
+#- id: "output387"
+#  event_window: [374, 600]#far
+# type: left
+- id: "output385"
+  event_window: [12, 180]
+  type: left
+- id: "output385"
+  event_window: [516, 646]
+  type: right
+- id: "output385"
+  event_window: [184, 572] #multi
+  type: right
+- id: "output385"
+  event_window: [764, 859]
+  type: left
+- id: "output384"
+  event_window: [533, 721]
+  type: left
+- id: "output384"
+  event_window: [1, 160] #multi
+  type: left
+- id: "output383"
+  event_window: [1, 75]
+  type: right
+- id: "output383"
+  event_window: [724, 899] #multi
+  type: right
+- id: "output381"
+  event_window: [1, 132]
+  type: left
+- id: "output379"
+  event_window: [111, 441] #multiandfar
+  type: left
+- id: "output378"
+  event_window: [70, 175]
+  type: right
+- id: "output378"
+  event_window: [150, 294] #multi
+  type: right
+- id: "output378"
+  event_window: [474, 561]
+  type: left
+- id: "output377"
+  event_window: [91, 671] #multi
+  type: left
+#- id: "output376"
+#  event_window: [98, 321]#far
+#  type: right
+#- id: "output374"
+#  event_window: [481, 656]#farand occ
+#  type: right
+#- id: "output374"
+#  event_window: [752, 862]#far
+#  type: right
+#- id: "output373"
+#  event_window: [147, 347]#multi
+#  type: right
+#- id: "output369"
+#  event_window: [705, 900]#multi
+#  type: right
+#- id: "output363"
+#  event_window: [108, 350]#far
+#  type: right
+#- id: "output361"
+#  event_window: [25, 180]#far
+#  type: left
+- id: "output361"
+  event_window: [642, 684] #motocycle
+  type: left
+- id: "output360"
+  event_window: [335, 443]
+  type: left
+- id: "output359"
+  event_window: [112, 216]
+  type: left
+- id: "output359"
+  event_window: [1, 162] #multi
+  type: left
+- id: "output358"
+  event_window: [250, 341]
+  type: right
+- id: "output358"
+  event_window: [705, 892] #multi
+  type: right
+- id: "output355"
+  event_window: [323, 469] #multi
+  type: right
+#- id: "output355"
+#  event_window: [660, 837]#far
+#  type: left
+- id: "output350"
+  event_window: [520, 795] #multi
+  type: right
+- id: "output349"
+  event_window: [38, 164]
+  type: left
+#- id: "output348"
+#  event_window: [287, 465]#far
+#  type: right
+#- id: "output348"
+#  event_window: [681 , 842]#far
+#  type: left
+- id: "output347"
+  event_window: [86, 175]
+  type: right
+- id: "output346"
+  event_window: [252, 700] #multi
+  type: right
+- id: "output345"
+  event_window: [245, 477]
+  type: left
+- id: "output345"
+  event_window: [501, 587] #cycle
+  type: left
+- id: "output342"
+  event_window: [564, 779] #funny
+  type: right
+- id: "output342"
+  event_window: [720, 890]
+  type: left
+- id: "output096"
+  event_window: [432, 599]
+  type: right
+#- id: "output096"
+#  event_window: [714, 860] #far
+#  type: right
+#- id: "output101"
+#  event_window: [105, 545] #far
+#  type: multi
+- id: "output103"
+  event_window: [340, 398]
+  type: left
+- id: "output103"
+  event_window: [403, 530]
+  type: left
+#- id: "output104"
+#  event_window: [505, 738] #far
+#  type: multi
+- id: "output105"
+  event_window: [107, 178]
+  type: left
+#- id: "output106"
+#  event_window: [817, ]#cropped
+#  type: left
+- id: "output108"
+  event_window: [192, 372]
+  type: left
+- id: "output108"
+  event_window: [403, 658]
+  type: left
+#- id: "output109"
+#  event_window: [463, 655]#far
+#  type: left
+- id: "output110"
+  event_window: [81, 177]
+  type: right
+#- id: "output111"
+#  event_window: [174, 485]#far
+#  type: right
+#- id: "output111"
+#  event_window: [186, 566]#far
+#  type: left
+#- id: "output112"
+#  event_window: [12, 183]#far
+#  type: right
+#- id: "output112"
+#  event_window: [272, 483]#far
+#  type: right
+- id: "output113"
+  event_window: [300, 440]
+  type: left
+#- id: "output113"
+#  event_window: [676]#far
+#  type: right
+- id: "output116"
+  event_window: [129, 247]
+  type: right
+- id: "output124"
+  event_window: [653, 860] #can also multi
+  type: left
+- id: "output128"
+  event_window: [101, 232]
+  type: right
+- id: "output133"
+  event_window: [140, 214]
+  type: right
+- id: "output135"
+  event_window: [683, 791]
+  type: right
+- id: "output140"
+  event_window: [349, 509]
+  type: left
+- id: "output150"
+  event_window: [46, 213]
+  type: left
+- id: "output150"
+  event_window: [164, 309]
+  type: left
+- id: "output161"
+  event_window: [497, 654]
+  type: right
+- id: "output161"
+  event_window: [654, 871]
+  type: left
+#- id: "output161"
+#  event_window: [1, 178]
+#  type: right
+#- id: "output180"
+#  event_window: [479, 794] #can be multi single
+#  type: multi
+- id: "output180"
+  event_window: [618, 725] #can be multi single
+  type: left
+- id: "output217"
+  event_window: [1, 250]
+  type: multi
+- id: "output234"
+  event_window: [639, 780]
+  type: multi
+- id: "output235"
+  event_window: [1, 298]
+  type: multi
