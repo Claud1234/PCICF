@@ -7,6 +7,7 @@ Created on 3rd March, 2025
 
 import os
 import cv2
+import time
 import json
 import glob
 import zCurve
@@ -38,10 +39,11 @@ def roi_cell_compute(roi_grid_cfg):
 
     return cell_coord_all
 
-def run(pie_path, config):
-
+def run(args, config):
+    pie_path = args.path
     morton_codes = []
-    sfc_input = []
+    sfc_input_df = []
+    frame_id = 0
     for rgb_frame in sorted(glob.glob(os.path.join(pie_path, '*.png'))):
         yolo_start_point = []
         yolo_end_point = []
@@ -77,6 +79,19 @@ def run(pie_path, config):
         #
         # plt.imshow(cv2.cvtColor(bgr_copy, cv2.COLOR_BGR2RGB))
         # plt.show()
+
+        if args.save_yolo_result is True:
+            bgr_copy = bgr.copy()
+            for roi_coord in roi_coord_all:
+                cv2.rectangle(bgr_copy, roi_coord[:2], roi_coord[2:], (0, 0, 255), 1)
+            for yolo_coord in yolo_coord_all:
+                cv2.rectangle(bgr_copy, yolo_coord[:2], yolo_coord[2:], (0, 255, 0), 1)
+
+            yolo_detect_path = rgb_frame.replace('datasets', 'outputs')
+            if not os.path.exists(os.path.dirname(yolo_detect_path)):
+                os.makedirs(os.path.dirname(yolo_detect_path))
+            cv2.imwrite(yolo_detect_path, bgr_copy)
+
         sfc_input = np.zeros(len(roi_coord_all))
         for i in range(len(roi_yolo_overlap_coord_all)):
             roi_yolo_overlap_coord = roi_yolo_overlap_coord_all[i]
@@ -86,33 +101,50 @@ def run(pie_path, config):
             overlap_size_cum += np.sum(np.array(roi_yolo_overlap_coord)[:, 0])
             # print(overlap_size_cum)
             # print(valid_overlap)
-            invalid_overlap_roi = compute_invalid_roi_yolo_overlap_size(valid_overlap)
-            if invalid_overlap_roi is not None:
-                sfc_input[i] = overlap_size_cum - invalid_overlap_roi
+            repeat_count_overlap_roi = compute_repeat_count_roi_yolo_overlap_size(valid_overlap)
+            if repeat_count_overlap_roi is not None:
+                sfc_input[i] = overlap_size_cum - repeat_count_overlap_roi
             else:
                 sfc_input[i] = overlap_size_cum
-        print(sfc_input)
 
-        break
+        sfc_input = sfc_input / (config['attention_grid']['width'] * config['attention_grid']['width'])
+        sfc_input = [1 if num >= 1 else num for num in sfc_input]
+
+        frame_ms_timestamp = frame_id * 33
+        frame_id += 1
+        sfc_input_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame': rgb_frame,
+                             'cell_0': sfc_input[0], 'cell_1': sfc_input[1], 'cell_2': sfc_input[2],
+                             'cell_3': sfc_input[3],'cell_4': sfc_input[4],'cell_5': sfc_input[5]})
+
+    sfc_input_df = pd.DataFrame(sfc_input_df, columns=['time_stamp_ms', 'frame', 'cell_0', 'cell_1', 'cell_2',
+                                                       'cell_3', 'cell_4', 'cell_5'])
+    sfc_csv_name = pie_path.split('/')[-2] + '.csv'
+    sfc_csv_path = os.path.join('./outputs/pie_yolo_csv', sfc_csv_name)
+    if not os.path.exists(os.path.dirname(sfc_csv_path)):
+        os.makedirs(os.path.dirname(sfc_csv_path))
+    sfc_input_df.to_csv(sfc_csv_path, sep=';', index=False)
 
 
-def compute_invalid_roi_yolo_overlap_size(valid_overlap):
+
+
+
+def compute_repeat_count_roi_yolo_overlap_size(valid_overlap):
     """
     compute the repeat-count overlap size
     :param valid_overlap:
     :return:
     """
-    invalid_overlap_area = 0
+    repeat_count_overlap_area = 0
     # if len(valid_overlap) > 1:
     for overlap_box_pair in itertools.combinations(valid_overlap, r=2):
         # print(overlap_box_pair)
-        repeat_count_overlap_area, _, _, _, _ = find_overlap(overlap_box_pair[0], overlap_box_pair[1])
-        invalid_overlap_area += repeat_count_overlap_area
+        overlap_area, _, _, _, _ = find_overlap(overlap_box_pair[0], overlap_box_pair[1])
+        repeat_count_overlap_area += overlap_area
         # print(f'overlap_area:{valid_overlap_area}')
     # else:
     #     valid_overlap_area = valid_overlap[0]
 
-    return invalid_overlap_area
+    return repeat_count_overlap_area
 
 
 def find_yolo_roi_overlap(roi_coord_all, yolo_coord_all):
@@ -201,19 +233,16 @@ def find_overlap(cord_0, cord_1):
 
 
 
-def cell_value_normalization():
-    return None
-
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='yolo-sfc-multi-ped pipeline for PIE dataset')
     parser.add_argument('-p', '--path', type=str, required=True,
                         help='input path of PIE dataset')
+    parser.add_argument('-s', '--save_yolo_result', action='store_true',
+                        help='save yolo detection bounding box images.')
 
     args = parser.parse_args()
 
     with open('config.json', 'r') as f:
         configs = json.load(f)
 
-    run(args.path, configs)
+    run(args, configs)
