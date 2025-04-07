@@ -12,7 +12,6 @@ import json
 import glob
 import zCurve
 import argparse
-import itertools
 
 import numpy as np
 import pandas as pd
@@ -39,6 +38,7 @@ def roi_cell_compute(roi_grid_cfg):
 
     return cell_coord_all
 
+
 def run(args, config):
     pie_path = args.path
     morton_codes = []
@@ -48,6 +48,7 @@ def run(args, config):
         yolo_start_point = []
         yolo_end_point = []
         yolo = YOLO("yolo11x.pt")
+        global bgr
         bgr = cv2.imread(rgb_frame)
         results = yolo.predict(bgr, verbose=False)
         for result in results:
@@ -96,16 +97,12 @@ def run(args, config):
         for i in range(len(roi_yolo_overlap_coord_all)):
             roi_yolo_overlap_coord = roi_yolo_overlap_coord_all[i]
             overlap_size_cum = 0
-            valid_overlap = []
-            valid_overlap.extend([i[1:] for i in roi_yolo_overlap_coord if i != [0, 0, 0, 0, 0]])
-            overlap_size_cum += np.sum(np.array(roi_yolo_overlap_coord)[:, 0])
-            # print(overlap_size_cum)
-            # print(valid_overlap)
-            repeat_count_overlap_roi = compute_repeat_count_roi_yolo_overlap_size(valid_overlap)
-            if repeat_count_overlap_roi is not None:
-                sfc_input[i] = overlap_size_cum - repeat_count_overlap_roi
-            else:
-                sfc_input[i] = overlap_size_cum
+            overlap_without_zeros = []
+            overlap_without_zeros.extend([i[1:] for i in roi_yolo_overlap_coord if i != [0, 0, 0, 0, 0]])
+
+            valid_overlap_area = compute_valid_overlap_area(overlap_without_zeros)
+            # print(f'valid_overlap_area: {valid_overlap_area}')
+            sfc_input[i] = valid_overlap_area
 
         sfc_input = sfc_input / (config['attention_grid']['width'] * config['attention_grid']['width'])
         sfc_input = [1 if num >= 1 else num for num in sfc_input]
@@ -125,26 +122,13 @@ def run(args, config):
     sfc_input_df.to_csv(sfc_csv_path, sep=';', index=False)
 
 
+def compute_valid_overlap_area(overlap_without_zeros):
+    empty_mask = np.zeros((bgr.shape[0], bgr.shape[1]), dtype=np.uint8)
+    for i in overlap_without_zeros:
+        empty_mask[i[1]:i[3], i[0]:i[2]] = 1
+    valid_overlap_area = np.count_nonzero(empty_mask == 1)
 
-
-
-def compute_repeat_count_roi_yolo_overlap_size(valid_overlap):
-    """
-    compute the repeat-count overlap size
-    :param valid_overlap:
-    :return:
-    """
-    repeat_count_overlap_area = 0
-    # if len(valid_overlap) > 1:
-    for overlap_box_pair in itertools.combinations(valid_overlap, r=2):
-        # print(overlap_box_pair)
-        overlap_area, _, _, _, _ = find_overlap(overlap_box_pair[0], overlap_box_pair[1])
-        repeat_count_overlap_area += overlap_area
-        # print(f'overlap_area:{valid_overlap_area}')
-    # else:
-    #     valid_overlap_area = valid_overlap[0]
-
-    return repeat_count_overlap_area
+    return valid_overlap_area
 
 
 def find_yolo_roi_overlap(roi_coord_all, yolo_coord_all):
@@ -160,7 +144,7 @@ def find_yolo_roi_overlap(roi_coord_all, yolo_coord_all):
         roi_yolo_overlap = [None] * len(yolo_coord_all)
         for j in range(len(yolo_coord_all)):
             yolo_coord = yolo_coord_all[j]
-            overlap_area, x_left, y_top, x_right, y_bottom = find_overlap(roi_coord, yolo_coord)
+            overlap_area, x_left, y_top, x_right, y_bottom = find_overlap_for_two_bbox(roi_coord, yolo_coord)
             roi_yolo_overlap[j] = [overlap_area, x_left, y_top, x_right, y_bottom]
 
         roi_yolo_overlap_all[i] = roi_yolo_overlap
@@ -168,7 +152,7 @@ def find_yolo_roi_overlap(roi_coord_all, yolo_coord_all):
     return roi_yolo_overlap_all
 
 
-def find_overlap(cord_0, cord_1):
+def find_overlap_for_two_bbox(cord_0, cord_1):
     """
     :param cord_0: [top_left_x, top_left_y, bottom_right_x, bottom_right_y]
     :param cord_1: [top_left_x, top_left_y, bottom_right_x, bottom_right_y]
@@ -183,54 +167,6 @@ def find_overlap(cord_0, cord_1):
         return 0, 0, 0, 0, 0
     overlap_size = (x_right - x_left) * (y_bottom - y_top)
     return overlap_size, x_left, y_top, x_right, y_bottom
-
-
-
-
-    #     cell_coord_all = np.concatenate([attention_cells_start_cord, attention_cells_end_cord], axis=1)
-    #
-    #     bgr = bgr_resize.copy()
-    #
-    #     input_zcurve = np.zeros(6)
-    #     if yolo_coord_all is not None:
-    #         for i in range(len(cell_coord_all)):
-    #             cell_coord = cell_coord_all[i]
-    #             bgr_overlap = cv2.rectangle(bgr, cell_coord[:2], cell_coord[2:], (0, 0, 255), 2)
-    #             overlap_cum = 0
-    #             for j in yolo_coord_all:
-    #                 overlap_area, x_left, y_top, x_right, y_bottom = overlap(cell_coord, j)
-    #                 color = list(np.random.random(size=3) * 256)
-    #                 bgr_overlap = cv2.rectangle(bgr, [x_left, y_top], [x_right, y_bottom], color, 2)
-    #                 overlap_cum += overlap_area
-    #
-    #             cell_area = config['attention_grid']['width'] * config['attention_grid']['height']
-    #             if overlap_cum > 0:
-    #                 input_zcurve[i] = overlap_cum / cell_area
-    #                 if input_zcurve[i] >= 1:
-    #                     input_zcurve[i] = 1
-    #     else:
-    #         for cell_coord in cell_coord_all:
-    #             bgr_overlap = cv2.rectangle(bgr, cell_coord[:2], cell_coord[2:], (0, 0, 255), 2)
-    #
-    #     # overlap_path = rgb_frame.replace('datasets/zod_multi_ped', 'outputs/zod_multi_ped')
-    #     # if not os.path.exists(os.path.dirname(overlap_path)):
-    #     #     os.makedirs(os.path.dirname(overlap_path))
-    #     # cv2.imwrite(overlap_path, bgr_overlap)
-    #
-    #     sfc_input.append({'frame': rgb_frame, 'cell_0': input_zcurve[0], 'cell_1': input_zcurve[1],
-    #                       'cell_2': input_zcurve[2], 'cell_3': input_zcurve[3],
-    #                       'cell_4': input_zcurve[4], 'cell_5': input_zcurve[5]})
-    #
-    #     morton_bgr = calculateMortonFromList_with_zCurve(input_zcurve)
-    #     morton_codes.append({'frame': rgb_frame, 'morton': morton_bgr})
-    #
-    # morton_codes = pd.DataFrame(morton_codes, columns=['frame', 'morton'])
-    # morton_codes.to_csv('../outputs/yolo_morton_zod_multi_ped.csv', sep=';', index=False)
-    #
-    # sfc_input = pd.DataFrame(sfc_input, columns=['frame', 'cell_0', 'cell_1', 'cell_2',
-    #                                              'cell_3', 'cell_4', 'cell_5'])
-    # sfc_input.to_csv('../outputs/sfc_input_zod_multi_ped.csv', sep=';', index=False)
-
 
 
 if __name__ == '__main__':
