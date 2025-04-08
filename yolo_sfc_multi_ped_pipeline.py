@@ -18,33 +18,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from ultralytics import YOLO
-
-
-def calculate_morton(values):
-    # Cap floating point numbers to one decimal place and convert to integers
-    int_values = [int(round(value, 1) * 10) for value in values]
-    value = zCurve.interlace(*int_values, dims=len(int_values))
-    return value
-
-
-def roi_cell_compute(roi_grid_cfg):
-    attention_cells_start_cord = np.array(roi_grid_cfg['grid_left_top_coord'])
-    attention_cell_width = roi_grid_cfg['width']
-    attention_cell_height = roi_grid_cfg['height']
-    attention_cells_end_cord = [start_piont + np.array([attention_cell_width, attention_cell_height]) for start_piont in
-                                attention_cells_start_cord]
-
-    cell_coord_all = np.concatenate([attention_cells_start_cord, attention_cells_end_cord], axis=1)
-
-    return cell_coord_all
+from utils import helper
 
 
 def run(args, config):
-    pie_path = args.path
-    morton_codes = []
+    input_path = args.input_path
+    morton_code_df = []
     sfc_input_df = []
     frame_id = 0
-    for rgb_frame in sorted(glob.glob(os.path.join(pie_path, '*.png'))):
+    for rgb_frame in sorted(glob.glob(os.path.join(input_path, '*.png'))):
+        #rgb_frame = rgb_frame.replace('.labels.png', '.png')
         yolo_start_point = []
         yolo_end_point = []
         yolo = YOLO("yolo11x.pt")
@@ -66,7 +49,7 @@ def run(args, config):
         if yolo_start_point is not None and yolo_end_point is not None:
             yolo_coord_all = np.concatenate((yolo_start_point, yolo_end_point), axis=1)
         else:
-            yolo_coord_all = None
+            yolo_coord_all = [0, 0, 0, 0]
 
         roi_coord_all = roi_cell_compute(config['attention_grid'])
         roi_yolo_overlap_coord_all = find_yolo_roi_overlap(roi_coord_all, yolo_coord_all)
@@ -108,18 +91,48 @@ def run(args, config):
         sfc_input = [1 if num >= 1 else num for num in sfc_input]
 
         frame_ms_timestamp = frame_id * 33
-        frame_id += 1
+
         sfc_input_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame': rgb_frame,
                              'cell_0': sfc_input[0], 'cell_1': sfc_input[1], 'cell_2': sfc_input[2],
                              'cell_3': sfc_input[3],'cell_4': sfc_input[4],'cell_5': sfc_input[5]})
 
+        sfc_input_norm = (np.array(sfc_input) > config['attention_grid']['threshold']).astype(int)
+        morton_code = calculate_morton(sfc_input_norm)
+        morton_code_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame': rgb_frame, 'morton': morton_code})
+        frame_id += 1
+
     sfc_input_df = pd.DataFrame(sfc_input_df, columns=['time_stamp_ms', 'frame', 'cell_0', 'cell_1', 'cell_2',
                                                        'cell_3', 'cell_4', 'cell_5'])
-    sfc_csv_name = pie_path.split('/')[-2] + '.csv'
-    sfc_csv_path = os.path.join('./outputs/pie_yolo_csv', sfc_csv_name)
-    if not os.path.exists(os.path.dirname(sfc_csv_path)):
-        os.makedirs(os.path.dirname(sfc_csv_path))
+    sfc_csv_name = input_path.split('/')[-2] + '_sfc_input' + '.csv'
+    sfc_csv_path = os.path.join(args.output_path, sfc_csv_name)
+    helper.dir_path_check(sfc_csv_path)
     sfc_input_df.to_csv(sfc_csv_path, sep=';', index=False)
+
+    morton_code_df = pd.DataFrame(morton_code_df, columns=['time_stamp_ms', 'frame', 'morton'])
+    morton_csv_name = input_path.split('/')[-2] + '_morton' + '.csv'
+    morton_csv_path = os.path.join(args.output_path, morton_csv_name)
+    helper.dir_path_check(morton_csv_path)
+    morton_code_df.to_csv(morton_csv_path, sep=';', index=False)
+
+
+def calculate_morton(values):
+    # Cap floating point numbers to one decimal place and convert to integers
+    int_values = [int(round(value, 1) * 10) for value in values]
+    value = zCurve.interlace(*int_values, dims=len(int_values))
+    return value
+
+
+def roi_cell_compute(roi_grid_cfg):
+    attention_cells_start_cord = np.array(roi_grid_cfg['grid_left_top_coord'])
+    attention_cell_width = roi_grid_cfg['width']
+    attention_cell_height = roi_grid_cfg['height']
+    attention_cells_end_cord = [start_piont + np.array([attention_cell_width, attention_cell_height]) for
+                                start_piont in
+                                attention_cells_start_cord]
+
+    cell_coord_all = np.concatenate([attention_cells_start_cord, attention_cells_end_cord], axis=1)
+
+    return cell_coord_all
 
 
 def compute_valid_overlap_area(overlap_without_zeros):
@@ -171,10 +184,12 @@ def find_overlap_for_two_bbox(cord_0, cord_1):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='yolo-sfc-multi-ped pipeline for PIE dataset')
-    parser.add_argument('-p', '--path', type=str, required=True,
+    parser.add_argument('-i', '--input_path', type=str, required=True,
                         help='input path of PIE dataset')
     parser.add_argument('-s', '--save_yolo_result', action='store_true',
                         help='save yolo detection bounding box images.')
+    parser.add_argument('-o', '--output_path', type=str, required=True,
+                        help='path for sfc input/output csv file. ')
 
     args = parser.parse_args()
 

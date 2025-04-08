@@ -8,6 +8,11 @@ import numpy as np
 from torchvision.transforms import v2
 
 
+def dir_path_check(full_path):
+    if not os.path.exists(os.path.dirname(full_path)):
+        os.makedirs(os.path.dirname(full_path))
+
+
 def rgb_anno_normalize(rgb, config, norm=True):
     """
     Resize the input image to specified size. Keep same aspect ratio and pad the gap.
