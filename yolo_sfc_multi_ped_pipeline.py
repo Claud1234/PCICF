@@ -37,11 +37,11 @@ def run(args, config):
         for result in results:
             result = result.boxes.cpu().numpy()
             human_cls_index = np.where(result.cls == 0)
-            if result.data[human_cls_index].size > 0:
-                humans_xyxyc = result.data[human_cls_index].astype(np.int64)
-                for i in range(len(humans_xyxyc)):
-                    yolo_start_point.append([humans_xyxyc[i][0], humans_xyxyc[i][1]])
-                    yolo_end_point.append([humans_xyxyc[i][2], humans_xyxyc[i][3]])
+            if result.xyxy[human_cls_index].size > 0:
+                humans_xyxy = result.xyxy[human_cls_index].astype(np.int64)
+                for i in range(len(humans_xyxy)):
+                    yolo_start_point.append([humans_xyxy[i][0], humans_xyxy[i][1]])
+                    yolo_end_point.append([humans_xyxy[i][2], humans_xyxy[i][3]])
             else:
                 yolo_start_point = None
                 yolo_end_point = None
