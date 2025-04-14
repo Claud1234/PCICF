@@ -33,3 +33,16 @@ def roi_values(heatmap, config):
 
     return roi_mean_values
 
+
+def roi_cell_compute(roi_grid_cfg):
+    attention_cells_start_cord = np.array(roi_grid_cfg['grid_left_top_coord'])
+    attention_cell_width = roi_grid_cfg['width']
+    attention_cell_height = roi_grid_cfg['height']
+    attention_cells_end_cord = [start_piont + np.array([attention_cell_width, attention_cell_height]) for
+                                start_piont in
+                                attention_cells_start_cord]
+
+    cell_coord_all = np.concatenate([attention_cells_start_cord, attention_cells_end_cord], axis=1)
+
+    return cell_coord_all
+
