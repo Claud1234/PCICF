@@ -26,18 +26,20 @@ class Yolo(object):
         self.track_dict = defaultdict(lambda: [])
         self.morton_code_df = []
         self.sfc_input_df = []
-        self.frame_id = 0
+        self.frame_counter = 0
 
     def yolo_track(self, input_glob):
+        #print(input_glob)
         for rgb_img in input_glob:
             #rgb_img = rgb_img.replace('.labels.png', '.png')
             frame_name = int(rgb_img.split('/')[-1].split('.')[0])
             result = self.yolo_tracker.track(rgb_img, persist=True, verbose=False)[0]
             result = result.boxes.cpu().numpy()
             human_cls_index = np.where(result.cls == 0)
-            if result.xyxy[human_cls_index].size > 0:
+            if result.is_track is True:
                 humans_xyxy = result.xyxy[human_cls_index].astype(np.uint16)
                 humans_xywh = result.xywh[human_cls_index].astype(np.uint16)
+                #print(result.id)
                 humans_track_id = result.id[human_cls_index].astype(np.uint16)
 
                 assert len(humans_track_id) == len(humans_xyxy)
@@ -60,26 +62,28 @@ class Yolo(object):
             if (max_center_x - min_center_x) > self.config['yolo_track_threshold']:
                 full_ped_cross.append(xyxyxywhi)
 
-        full_ped_cross = np.vstack(full_ped_cross)
+        if len(full_ped_cross) > 0:
+            full_ped_cross = np.vstack(full_ped_cross)
 
-        for rgb_img in input_glob:
-            #rgb_img = rgb_img.replace('.labels.png', '.png')
-            frame_name = int(rgb_img.split('/')[-1].split('.')[0])
-            frame_mask = full_ped_cross[:, -1] == frame_name
+            for rgb_img in input_glob:
+                #rgb_img = rgb_img.replace('.labels.png', '.png')
+                frame_name = int(rgb_img.split('/')[-1].split('.')[0])
+                frame_mask = full_ped_cross[:, -1] == frame_name
 
-            yolo_coord_all = full_ped_cross[frame_mask][:, 0:4]
+                yolo_coord_all = full_ped_cross[frame_mask][:, 0:4]
 
-            sfc_input, frame_ms_timestamp = self.yolo_roi_compute_one_frame(yolo_coord_all, rgb_img)
-            sfc_input_norm = (np.array(sfc_input) > self.config['attention_grid']['threshold']).astype(int)
+                sfc_input, frame_ms_timestamp = self.yolo_roi_compute_one_frame(yolo_coord_all, rgb_img)
+                sfc_input_norm = (np.array(sfc_input) > self.config['attention_grid']['threshold']).astype(int)
 
-            self.sfc_input_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame': rgb_img,
-                                      'cell_0': sfc_input_norm[0], 'cell_1': sfc_input_norm[1], 'cell_2': sfc_input_norm[2],
-                                      'cell_3': sfc_input_norm[3], 'cell_4': sfc_input_norm[4], 'cell_5': sfc_input_norm[5]})
+                frame_id = int(rgb_img.split('/')[-1].split('.')[0])
+                self.sfc_input_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame_id': frame_id,
+                                          'cell_0': sfc_input_norm[0], 'cell_1': sfc_input_norm[1], 'cell_2': sfc_input_norm[2],
+                                          'cell_3': sfc_input_norm[3], 'cell_4': sfc_input_norm[4], 'cell_5': sfc_input_norm[5]})
 
-            morton_code = calculate_morton(sfc_input_norm)
-            self.morton_code_df.append({'time_stamp_ms': frame_ms_timestamp,
-                                        'frame': rgb_img, 'morton': morton_code})
-            self.frame_id += 1
+                morton_code = calculate_morton(sfc_input_norm)
+                self.morton_code_df.append({'time_stamp_ms': frame_ms_timestamp,
+                                            'frame_id': frame_id, 'morton': morton_code})
+                self.frame_counter += 1
 
         return self.sfc_input_df, self.morton_code_df
 
@@ -107,15 +111,16 @@ class Yolo(object):
 
             sfc_input, frame_ms_timestamp = self.yolo_roi_compute_one_frame(yolo_coord_all, rgb_img)
 
-            self.sfc_input_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame': rgb_img,
+            frame_id = int(rgb_img.split('/')[-1].split('.')[0])
+            self.sfc_input_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame_id': frame_id,
                                       'cell_0': sfc_input[0], 'cell_1': sfc_input[1], 'cell_2': sfc_input[2],
                                       'cell_3': sfc_input[3], 'cell_4': sfc_input[4], 'cell_5': sfc_input[5]})
 
             sfc_input_norm = (np.array(sfc_input) > self.config['attention_grid']['threshold']).astype(int)
             morton_code = calculate_morton(sfc_input_norm)
             self.morton_code_df.append({'time_stamp_ms': frame_ms_timestamp,
-                                        'frame': rgb_img, 'morton': morton_code})
-            self.frame_id += 1
+                                        'frame_id': frame_id, 'morton': morton_code})
+            self.frame_counter += 1
 
         return self.sfc_input_df, self.morton_code_df
 
@@ -160,11 +165,12 @@ class Yolo(object):
         sfc_input = sfc_input / (self.config['attention_grid']['width'] * self.config['attention_grid']['width'])
         sfc_input = [1 if num >= 1 else num for num in sfc_input]
 
-        frame_ms_timestamp = self.frame_id * 33
+        frame_ms_timestamp = self.frame_counter * 33
 
         return sfc_input, frame_ms_timestamp
 
-    def compute_valid_overlap_area(self, bgr, overlap_without_zeros):
+    @staticmethod
+    def compute_valid_overlap_area(bgr, overlap_without_zeros):
         empty_mask = np.zeros((bgr.shape[0], bgr.shape[1]), dtype=np.uint8)
         for i in overlap_without_zeros:
             empty_mask[i[1]:i[3], i[0]:i[2]] = 1
@@ -174,7 +180,7 @@ class Yolo(object):
 
     def find_yolo_roi_overlap(self, roi_coord_all, yolo_coord_all):
         """
-        :param roi_coord_all: 6 pre-defined ROI cell coordinates [top_left_x, top_left_y, bottom_right_x, bottom_right_y]
+        :param roi_coord_all: 6 pre-defined ROI cell coordinates[top_left_x, top_left_y, bottom_right_x, bottom_right_y]
         :param yolo_coord_all: All YOLO pedestrian detection coordinates
                                 [top_left_x, top_left_y, bottom_right_x, bottom_right_y]
         :return roi_yolo_overlap_all: overlap size-and-coordinates of all yolo_ped_bbox to each pre-defined ROI cell
@@ -183,11 +189,11 @@ class Yolo(object):
         for i in range(len(roi_yolo_overlap_all)):
             roi_coord = roi_coord_all[i]
             roi_yolo_overlap = [None] * len(yolo_coord_all)
-            #print(yolo_coord_all)
+            # print(yolo_coord_all)
             for j in range(len(yolo_coord_all)):
                 yolo_coord = yolo_coord_all[j]
 
-                #print(roi_coord)
+                # print(roi_coord)
                 overlap_area, x_left, y_top, x_right, y_bottom = self.find_overlap_for_two_bbox(roi_coord, yolo_coord)
                 roi_yolo_overlap[j] = [overlap_area, x_left, y_top, x_right, y_bottom]
 
@@ -195,7 +201,8 @@ class Yolo(object):
 
         return roi_yolo_overlap_all
 
-    def find_overlap_for_two_bbox(self, cord_0, cord_1):
+    @staticmethod
+    def find_overlap_for_two_bbox(cord_0, cord_1):
         """
         :param cord_0: [top_left_x, top_left_y, bottom_right_x, bottom_right_y]
         :param cord_1: [top_left_x, top_left_y, bottom_right_x, bottom_right_y]

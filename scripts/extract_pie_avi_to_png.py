@@ -29,7 +29,7 @@ for i in pie_event_window_anno:
         cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame + j)
         _, frame = cap.read()
 
-        frame_path = os.path.join('../datasets/pie', i['id'], ('%03d' % (start_frame + j) + '.png'))
+        frame_path = os.path.join('../datasets/pie_1', i['id'], ('%03d' % (start_frame + j) + '.png'))
         if not os.path.exists(os.path.dirname(frame_path)):
             os.makedirs(os.path.dirname(frame_path))
         cv2.imwrite(frame_path, cv2.resize(frame, (640, 480)))

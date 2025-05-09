@@ -4,6 +4,7 @@
         "epochs":400,
         "batch_size":24
     },
+  "input_yaml_path": "./datasets/pie_anno.yml",
   "yolo_track_threshold": 240,
   "mlnet_input_size": [640, 480],
   "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pth",
@@ -11,7 +12,7 @@
   "attention_grid": {
     "width": 60,
     "height": 120,
-    "grid_left_top_coord":[[120, 200], [180, 200], [240, 200], [340, 200], [400, 200], [460, 200]],
+    "grid_left_top_coord":[[120, 280], [180, 280], [240, 280], [340, 280], [400, 280], [460, 280]],
     "threshold": 0.0
   },
   "Dataset": {
