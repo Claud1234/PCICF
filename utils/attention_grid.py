@@ -13,14 +13,15 @@ import numpy as np
 
 def roi_values(heatmap, config):
     """
+    THIS IS FOR MLNET, NEED TO RE-CODE
     select ther ROI regions defined in config.json and compute np.mean()
     :param heatmap: cpu().numpy() array which (h/8, w/8).float32 from mlnet prediction
     :param config: config.json. For getting to know the regions' coordinates.
     :return: mean values (float32) for each ROI region.
     """
     roi_left_top_all = np.array(config['attention_grid']['grid_left_top_coord']).transpose()
-    roi_right_all = roi_left_top_all[0] + config['attention_grid']['width']
-    roi_bottom_all = roi_left_top_all[1] + config['attention_grid']['height']
+    roi_right_all = roi_left_top_all[0] + config['General']['roi_width']
+    roi_bottom_all = roi_left_top_all[1] + config['General']['roi_height']
     if any(i > config['mlnet_input_size'][0] for i in roi_right_all) or any(
             i > config['mlnet_input_size'][1] for i in roi_bottom_all):
         sys.exit('The attention_grid definition is beyond the image size!')
@@ -34,10 +35,10 @@ def roi_values(heatmap, config):
     return roi_mean_values
 
 
-def roi_cell_compute(roi_grid_cfg):
+def roi_cell_compute(roi_grid_cfg, roi_width, roi_height):
     attention_cells_start_cord = np.array(roi_grid_cfg['grid_left_top_coord'])
-    attention_cell_width = roi_grid_cfg['width']
-    attention_cell_height = roi_grid_cfg['height']
+    attention_cell_width = roi_width
+    attention_cell_height = roi_height
     attention_cells_end_cord = [start_piont + np.array([attention_cell_width, attention_cell_height]) for
                                 start_piont in
                                 attention_cells_start_cord]

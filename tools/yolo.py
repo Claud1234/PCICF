@@ -3,6 +3,7 @@
 
 import os
 import cv2
+import sys
 import glob
 import numpy as np
 from ultralytics import YOLO
@@ -18,10 +19,10 @@ class Yolo(object):
         self.args = args
         self.config = config
         #self.input_path = input_path
-        if self.args.mode == 'detect':
-            self.yolo_detecter = YOLO("yolo11x.pt")
-        elif self.args.mode == 'track':
-            self.yolo_tracker = YOLO("yolo11x.pt")
+        # if self.args.mode == 'detect':
+        #     self.yolo_detecter = YOLO("yolo11x.pt")
+        # elif self.args.mode == 'track':
+        self.yolo_tracker = YOLO("yolo11x.pt")
 
         self.track_dict = defaultdict(lambda: [])
         self.morton_code_df = []
@@ -59,7 +60,8 @@ class Yolo(object):
             min_center_x = min(center_x_all)
             max_center_x = max(center_x_all)
 
-            if (max_center_x - min_center_x) > self.config['yolo_track_threshold']:
+            if (max_center_x - min_center_x) > self.config['General']['yolo_track_threshold'] \
+                    and max_center_x > self.config['General']['image_width'] / 2 > min_center_x:
                 full_ped_cross.append(xyxyxywhi)
 
         if len(full_ped_cross) > 0:
@@ -73,7 +75,7 @@ class Yolo(object):
                 yolo_coord_all = full_ped_cross[frame_mask][:, 0:4]
 
                 sfc_input, frame_ms_timestamp = self.yolo_roi_compute_one_frame(yolo_coord_all, rgb_img)
-                sfc_input_norm = (np.array(sfc_input) > self.config['attention_grid']['threshold']).astype(int)
+                sfc_input_norm = (np.array(sfc_input) > self.config['General']['sfc_bounding']).astype(int)
 
                 frame_id = int(rgb_img.split('/')[-1].split('.')[0])
                 self.sfc_input_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame_id': frame_id,
@@ -87,46 +89,19 @@ class Yolo(object):
 
         return self.sfc_input_df, self.morton_code_df
 
-    def yolo_detect(self, input_glob):
-        for rgb_img in input_glob:
-            yolo_start_point = []
-            yolo_end_point = []
-            results = self.yolo_detecter.predict(rgb_img, verbose=False)
-            for result in results:
-                result = result.boxes.cpu().numpy()
-                human_cls_index = np.where(result.cls == 0)
-                if result.xyxy[human_cls_index].size > 0:
-                    humans_xyxy = result.xyxy[human_cls_index].astype(np.int64)
-                    for i in range(len(humans_xyxy)):
-                        yolo_start_point.append([humans_xyxy[i][0], humans_xyxy[i][1]])
-                        yolo_end_point.append([humans_xyxy[i][2], humans_xyxy[i][3]])
-                else:
-                    yolo_start_point = None
-                    yolo_end_point = None
-
-            if yolo_start_point is not None and yolo_end_point is not None:
-                yolo_coord_all = np.concatenate((yolo_start_point, yolo_end_point), axis=1)
-            else:
-                yolo_coord_all = [0, 0, 0, 0]
-
-            sfc_input, frame_ms_timestamp = self.yolo_roi_compute_one_frame(yolo_coord_all, rgb_img)
-
-            frame_id = int(rgb_img.split('/')[-1].split('.')[0])
-            self.sfc_input_df.append({'time_stamp_ms': frame_ms_timestamp, 'frame_id': frame_id,
-                                      'cell_0': sfc_input[0], 'cell_1': sfc_input[1], 'cell_2': sfc_input[2],
-                                      'cell_3': sfc_input[3], 'cell_4': sfc_input[4], 'cell_5': sfc_input[5]})
-
-            sfc_input_norm = (np.array(sfc_input) > self.config['attention_grid']['threshold']).astype(int)
-            morton_code = calculate_morton(sfc_input_norm)
-            self.morton_code_df.append({'time_stamp_ms': frame_ms_timestamp,
-                                        'frame_id': frame_id, 'morton': morton_code})
-            self.frame_counter += 1
-
-        return self.sfc_input_df, self.morton_code_df
-
     def yolo_roi_compute_one_frame(self, yolo_coord_all, rgb_img):
         bgr = cv2.imread(rgb_img)
-        roi_coord_all = roi_cell_compute(self.config['attention_grid'])
+        if self.args.dataset == 'pie':
+            roi_coord_all = roi_cell_compute(self.config['Dataset']['pie'],
+                                             self.config['General']['roi_width'],
+                                             self.config['General']['roi_height'])
+        elif self.args.dataset == 'betterSMIRK':
+            roi_coord_all = roi_cell_compute(self.config['Dataset']['betterSMIRK'],
+                                             self.config['General']['roi_width'],
+                                             self.config['General']['roi_height'])
+        else:
+            sys.exit('A mode must be specified for yolo! (detect or track)')
+
         roi_yolo_overlap_coord_all = self.find_yolo_roi_overlap(roi_coord_all, yolo_coord_all)
 
         # bgr_copy = bgr.copy()
@@ -146,7 +121,8 @@ class Yolo(object):
             for yolo_coord in yolo_coord_all:
                 cv2.rectangle(bgr_copy, yolo_coord[:2], yolo_coord[2:], (0, 255, 0), 1)
 
-            yolo_detect_path = rgb_img.replace('datasets/pie', f'outputs/pie_yolo_{self.args.mode}')
+            # yolo_detect_path = f'outputs/png_visual_{self.args.dataset}' + rgb_img.split('/')[-1]
+            yolo_detect_path = rgb_img.replace('datasets', f'outputs/png_visual_{self.args.dataset}')
             if not os.path.exists(os.path.dirname(yolo_detect_path)):
                 os.makedirs(os.path.dirname(yolo_detect_path))
             cv2.imwrite(yolo_detect_path, bgr_copy)
@@ -162,7 +138,7 @@ class Yolo(object):
             # print(f'valid_overlap_area: {valid_overlap_area}')
             sfc_input[i] = valid_overlap_area
 
-        sfc_input = sfc_input / (self.config['attention_grid']['width'] * self.config['attention_grid']['width'])
+        sfc_input = sfc_input / (self.config['General']['roi_width'] * self.config['General']['roi_height'])
         sfc_input = [1 if num >= 1 else num for num in sfc_input]
 
         frame_ms_timestamp = self.frame_counter * 33

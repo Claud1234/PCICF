@@ -23,7 +23,9 @@ from utils import helper
 
 
 def make_input_list(args, config):
-    input_png_list = []
+    global dir_name
+    global start_frame
+    global end_frame
     if args.dataset == 'pie':
         input_yml = config['Dataset']['pie']['yaml_path']
         with open(input_yml, 'r') as _f:
@@ -35,29 +37,37 @@ def make_input_list(args, config):
             # TODO: change this multi plus thing.
             input_png_list = ['./datasets/pie/' + dir_name + '/' + ('%03d' % i) + '.png' for i in
                               range(start_frame, end_frame + 1)]
+            print(f'Processing the path {dir_name} of frame {start_frame} to {end_frame}...')
+            run(input_png_list, args, configs)
 
     elif args.dataset == 'betterSMIRK':
         input_path = config['Dataset']['betterSMIRK']['input_path']
-        label_glob = sorted(glob.glob(os.path.join(input_path, '*.labels.png')))
-        input_png_list.append([i.replace('.labels.png', '.png') for i in label_glob])
+        input_png_list = sorted(glob.glob(os.path.join(input_path, '*.png')))
+        # input_png_list.append([i.replace('.labels.png', '.png') for i in label_glob])
+        print(f'Processing the path {input_path}...')
+        run(input_png_list, args, configs)
 
     else:
         sys.exit("Must specify a dataset, either 'pie' or 'betterSMIRK'")
 
-    return input_png_list
-
 
 def run(input_list, args, config):
-    input_png_list = input_list
+    png_list = input_list
 
-
-    print(f'Processing the path {dir_name} of frame {start_frame} to {end_frame}...')
     yolo = Yolo(args, config)
-    # input_glob = sorted(glob.glob(os.path.join(input_path, '*.png')))
-    if args.mode == 'detect':
-        sfc_input_df, morton_code_df = yolo.yolo_detect(input_png_list)
-    elif args.mode == 'track':
-        sfc_input_df, morton_code_df = yolo.yolo_track(input_png_list)
+    # if args.mode == 'detect':
+    #     sfc_input_df, morton_code_df = yolo.yolo_detect(png_list)
+    # elif args.mode == 'track':
+    sfc_input_df, morton_code_df = yolo.yolo_track(png_list)
+    # else:
+    #     sys.exit('A mode must be specified for yolo! (detect or track)')
+
+    if args.dataset == 'pie':
+        sfc_csv_name = dir_name + '_' + str(start_frame) + '_' + str(end_frame) + '_sfc_input' + '.csv'
+        morton_csv_name = dir_name + '_' + str(start_frame) + '_' + str(end_frame) + '_morton' + '.csv'
+    elif args.dataset == 'betterSMIRK':
+        sfc_csv_name = config['Dataset']['betterSMIRK']['input_path'].split('/')[-1] + '_sfc_input' + '.csv'
+        morton_csv_name = config['Dataset']['betterSMIRK']['input_path'].split('/')[-1] + '_morton' + '.csv'
     else:
         sys.exit('A mode must be specified for yolo! (detect or track)')
 
@@ -65,7 +75,6 @@ def run(input_list, args, config):
         sfc_input_df = pd.DataFrame(sfc_input_df, columns=['time_stamp_ms', 'frame_id',
                                                            'cell_0', 'cell_1', 'cell_2',
                                                            'cell_3', 'cell_4', 'cell_5'])
-        sfc_csv_name = dir_name + '_' + str(start_frame) + '_' + str(end_frame) + '_sfc_input' + '.csv'
         sfc_csv_path = os.path.join(args.output_path, sfc_csv_name)
         helper.dir_path_check(sfc_csv_path)
         sfc_input_df.to_csv(sfc_csv_path, sep=';', index=False)
@@ -73,11 +82,24 @@ def run(input_list, args, config):
     if morton_code_df is not None:
         #print(morton_code_df)
         morton_code_df = pd.DataFrame(morton_code_df, columns=['time_stamp_ms', 'frame_id', 'morton'])
-        morton_csv_name = dir_name + '_' + str(start_frame) + '_' + str(end_frame) + '_morton' + '.csv'
         morton_csv_path = os.path.join(args.output_path, morton_csv_name)
         helper.dir_path_check(morton_csv_path)
         morton_code_df.to_csv(morton_csv_path, sep=';', index=False)
 
+        df_numpy = morton_code_df.to_numpy()
+        morton = [i[-1] for i in df_numpy]
+        frame = [i[-2] for i in df_numpy]
+        _, ax1 = plt.subplots()
+        ax1.set_xlabel("Morton")
+        ax1.set_ylabel("Frequency")
+        ax1.set_ylim((0, 1))
+        ax1.eventplot(morton, orientation='horizontal', colors="red", lineoffsets=0.5)
+
+        ax2 = ax1.twinx()
+
+        ax2.scatter(morton, frame, s=5, color='green')
+        ax2.set_ylabel("Frame Number")
+        plt.savefig(morton_csv_path.replace('.csv', '.png'))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='yolo-sfc-multi-ped pipeline for PIE dataset')
@@ -96,4 +118,3 @@ if __name__ == '__main__':
         configs = json.load(f)
 
     input_png_list = make_input_list(args, configs)
-    run(args, configs)
