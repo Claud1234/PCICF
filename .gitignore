@@ -6,4 +6,5 @@ smirk/
 *.pdf
 *.pkl
 .ipynb_checkpoints
-*.csv
+outputs/
+datasets/

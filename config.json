@@ -12,11 +12,11 @@
   },
   "Dataset": {
     "pie": {
-      "yaml_path": "./datasets/pie_splits/event_1.yml",
+      "yaml_path": "./datasets/pie_splits/event_3.yml",
       "grid_left_top_coord":[[120, 280], [180, 280], [240, 280], [340, 280], [400, 280], [460, 280]]
     },
     "betterSMIRK": {
-      "input_path": "./datasets/better_smirk/raw_data/left2right/one_cell/sq_00",
+      "input_path": "./datasets/better_smirk_80_events/event_1/evt_01",
       "grid_left_top_coord":[[120, 200], [180, 200], [240, 200], [340, 200], [400, 200], [460, 200]]
     },
     "smirk": {

@@ -1,123 +1,42 @@
-- id: "output_008"
-  event_window: [571, 697]
-  type: right
-- id: "output_009"
-  event_window: [50, 210]
-  type: right
-- id: "output_011"
-  event_window: [470, 510]
-  type: right
-- id: "output_011"
-  event_window: [621, 731]
-  type: right
-- id: "output_011"
-  event_window: [805, 892]
-  type: right
 - id: "output_012"
   event_window: [160, 230]
-  type: left
-- id: "output_012"
-  event_window: [640, 720]
-  type: right
+  type: left, 2->1
 - id: "output_012"
   event_window: [704, 790]
-  type: left
-- id: "output_013"
-  event_window: [84, 153]
-  type: left
-- id: "output_016"
-  event_window: [503, 593]
-  type: left
-- id: "output_016"
-  event_window: [607, 744]
-  type: left
-- id: "output_016"
-  event_window: [805, 889]
-  type: right
-- id: "output_018"
-  event_window: [616, 636]
-  type: left
+  type: left, 3 with 521
 - id: "output_021"
   event_window: [139, 200] #225
-  type: right
-- id: "output_022"
-  event_window: [782, 893]
-  type: right
-- id: "output_025"
-  event_window: [210, 291]
-  type: left
-- id: "output_030"
-  event_window: [536, 674]
-  type: right
+  type: right, 2 consecutive
+#- id: "output_031"
+#  event_window: [1, 150]
+#  type: right, 1
 - id: "output_031"
-  event_window: [1, 150]
-  type: right
-- id: "output_031"
-  event_window: [40, 174]
-  type: left
-- id: "output_031"
-  event_window: [40, 196]
-  type: left
-- id: "output_031"
-  event_window: [89, 218]
-  type: left
-- id: "output_031"
-  event_window: [89, 218]
-  type: left
-- id: "output_031"
-  event_window: [129, 253]
-  type: left
-- id: "output_034"
-  event_window: [249, 296]
-  type: left
+  event_window: [40, 253]
+  type: left, 4 conse
 #- id: "output_034"      ## Far away 
 #  event_window: [463, 602]
 #  type: left
-- id: "output_034"
-  event_window: [631, 758]
-  type: left
 - id: "output_037"
   event_window: [434, 637]
-  type: left
+  type: left, 1->2 from third
 - id: "output_036"
   event_window: [232, 479]
-  type: left
-- id: "output_039"
-  event_window: [579, 642]
-  type: left
-- id: "output_040"
-  event_window: [340, 479]
-  type: right
-- id: "output_042"
-  event_window: [634, 732]
-  type: right
+  type: left, 2 conse
 - id: "output_042"
   event_window: [860, 887]
-  type: left
+  type: left, 1
 - id: "output_045"
   event_window: [343, 410]
-  type: right
+  type: right, 4 conseq
 - id: "output_048"
   event_window: [1, 274]
-  type: left
-- id: "output_051"
-  event_window: [692, 838]
-  type: left
+  type: left, 2 delay recheck
 - id: "output_053"
   event_window: [503, 736]
   type: right
-- id: "output_054"
-  event_window: [243, 488]
-  type: right
 - id: "output_055"
   event_window: [85, 253]
-  type: right
-- id: "output_072"
-  event_window: [484, 644]
-  type: right
-- id: "output_075"
-  event_window: [637, 769]
-  type: right
+  type: right, multi, recheck
 - id: "output_003"
   event_window: [502, 631] #far
   type: right
