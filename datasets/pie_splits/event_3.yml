@@ -1,0 +1,12 @@
+- id: "output_008"
+  event_window: [571, 697]
+  type: right
+  comment: one pedestrian splits to two
+- id: "output_009"
+  event_window: [50, 210]
+  type: right
+  comment: one pedestrian splits to two
+- id: "output_011"
+  event_window: [621, 731]
+  type: right
+  comment: one pedestrian splits to two
