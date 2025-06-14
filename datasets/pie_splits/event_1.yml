@@ -1,19 +1,45 @@
+- id: "output_003"
+  event_window: [502, 583]
+- id: "output_008"
+  event_window: [113, 187]
 - id: "output_011"
   event_window: [470, 510]
 - id: "output_011"
   event_window: [805, 892]
 - id: "output_012"
   event_window: [640, 700]
+- id: "output_014"
+  event_window: [456, 501]
 - id: "output_016"
   event_window: [805, 889]
+- id: "output_017"
+  event_window: [760, 824]
 - id: "output_022"
   event_window: [782, 893]
+- id: "output_024"
+  event_window: [593, 723]
+- id: "output_024"
+  event_window: [714, 828]
+- id: "output_027"
+  event_window: [543, 680]
+  comment: far away
+- id: "output_030"
+  event_window: [64, 201]
 - id: "output_030"
   event_window: [536, 674]
+- id: "output_031"
+  event_window: [677, 788]
+- id: "output_033"
+  event_window: [344, 556]
+  comment: far away
 - id: "output_040"
   event_window: [340, 479]
 - id: "output_042"
   event_window: [634, 732]
+- id: "output_044"
+  event_window: [278, 329]
+- id: "output_053"
+  event_window: [503, 736]
 - id: "output_054"
   event_window: [243, 488]
   comment: from third cell
@@ -21,3 +47,66 @@
   event_window: [484, 644]
 - id: "output_075"
   event_window: [637, 769]
+- id: "output_096"
+  event_window: [432, 599]
+- id: "output_103"
+  event_window: [340, 398]
+- id: "output_110"
+  event_window: [81, 177]
+- id: "output_133"
+  event_window: [140, 214]
+- id: "output_135"
+  event_window: [683, 791]
+- id: "output_280"
+  event_window: [280, 419]
+- id: "output_291"
+  event_window: [339, 524]
+- id: "output_292"
+  event_window: [350, 429]
+- id: "output_296"
+  event_window: [65, 229]
+- id: "output_302"
+  event_window: [1, 152]
+- id: "output_311"
+  event_window: [442, 548]
+- id: "output_319"
+  event_window: [349, 553]
+- id: "output_347"
+  event_window: [86, 175]
+- id: "output_358"
+  event_window: [250, 341]
+- id: "output_381"
+  event_window: [1, 132]
+  comment: far away
+- id: "output_383"
+  event_window: [1, 75]
+- id: "output_390"
+  event_window: [538, 693]
+- id: "output_390"
+  event_window: [771, 892]
+- id: "output_402"
+  event_window: [534, 654]
+- id: "output_425"
+  event_window: [278, 423]
+- id: "output_436"
+  event_window: [1, 176] #cycle
+- id: "output_458"
+  event_window: [132, 431]
+- id: "output_472"
+  event_window: [463, 557]
+- id: "output_473"
+  event_window: [405, 644]
+- id: "output_488"
+  event_window: [745, 899]
+- id: "output_558"
+  event_window: [261, 477]
+- id: "output_572"
+  event_window: [1, 132]
+
+
+
+
+
+
+
+

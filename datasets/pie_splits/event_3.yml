@@ -1,12 +1,29 @@
 - id: "output_008"
   event_window: [571, 697]
-  type: right
   comment: one pedestrian splits to two
 - id: "output_009"
   event_window: [50, 210]
-  type: right
   comment: one pedestrian splits to two
 - id: "output_011"
   event_window: [621, 731]
-  type: right
   comment: one pedestrian splits to two
+- id: "output_045"
+  event_window: [343, 410]
+  comment: two clusters, four pedestrians
+- id: "output_280"
+  event_window: [280, 419]
+- id: "output_282"
+  event_window: [1, 166]
+  comment: two pedestrians merger to one
+- id: "output_391"
+  event_window: [73, 175]
+  comment: two pedestrians merger to one
+- id: "output_391"
+  event_window: [176, 271]
+  comment: two pedestrians merger to one
+- id: "output_531"
+  event_window: [33, 181]
+- id: "output_546"
+  event_window: [440, 590]
+
+

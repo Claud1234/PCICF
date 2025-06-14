@@ -1,20 +1,94 @@
-- id: "output_016"
-  event_window: [503, 593]
+- id: "output_003"
+  event_window: [822, 892]
 - id: "output_013"
   event_window: [84, 153]
+- id: "output_016"
+  event_window: [503, 593]
 - id: "output_016"
   event_window: [607, 744]
 - id: "output_018"
   event_window: [616, 636]
+- id: "output_024"
+  event_window: [434, 573]
 - id: "output_025"
   event_window: [210, 291]
   comment: from third cell
+- id: "output_032"
+  event_window: [55, 167]
 - id: "output_034"
   event_window: [250, 296]
   comment: from third cell
 - id: "output_034"
   event_window: [631, 758]
+- id: "output_038"
+  event_window: [320, 497]
 - id: "output_039"
   event_window: [579, 642]
+- id: "output_041"
+  event_window: [86, 186]
+- id: "output_042"
+  event_window: [860, 887]
 - id: "output_051"
   event_window: [692, 838]
+- id: "output_103"
+  event_window: [340, 398]
+- id: "output_103"
+  event_window: [403, 530]
+- id: "output_105"
+  event_window: [107, 178]
+- id: "output_108"
+  event_window: [192, 372]
+- id: "output_108"
+  event_window: [403, 658]
+- id: "output_113"
+  event_window: [300, 440]
+- id: "output_140"
+  event_window: [349, 509]
+- id: "output_291"
+  event_window: [529, 695]
+- id: "output_292"
+  event_window: [290, 400]
+- id: "output_342"
+  event_window: [740, 890]
+- id: "output_345"
+  event_window: [245, 477]
+- id: "output_345"
+  event_window: [501, 587] #cycle
+- id: "output_349"
+  event_window: [38, 164]
+- id: "output_359"
+  event_window: [120, 216]
+- id: "output_360"
+  event_window: [335, 443]
+- id: "output_361"
+  event_window: [ 642, 684 ] #motocycle
+- id: "output_378"
+  event_window: [474, 561]
+- id: "output_384"
+  event_window: [533, 721]
+- id: "output_387"
+  event_window: [54, 190]
+- id: "output_407"
+  event_window: [391, 449] #motocycle
+- id: "output_417"
+  event_window: [393, 595]
+- id: "output_420"
+  event_window: [335, 408]
+- id: "output_430"
+  event_window: [539, 752]
+- id: "output_449"
+  event_window: [546, 773]
+  comment: very far away.
+- id: "output_486"
+  event_window: [1, 64] #cycle
+- id: "output_525"
+  event_window: [1, 234]
+- id: "output_544"
+  event_window: [542, 638]
+
+
+
+
+
+
+

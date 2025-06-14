@@ -1,0 +1,21 @@
+- id: "output_003"
+  event_window: [598, 690]
+- id: "output_012"
+  event_window: [160, 230]
+  comment: two pedestrians merger to one
+- id: "output_021"
+  event_window: [139, 200] #225
+  comment: 2 consecutive
+- id: "output_037"
+  event_window: [434, 637]
+  comment: one pedestrian splits to two
+- id: "output_036"
+  event_window: [232, 479]
+- id: "output_276"
+  event_window: [22, 87]
+- id: "output_281"
+  event_window: [171, 375]
+  comment: far away and challenging
+- id: "output_430"
+  event_window: [192, 538]
+
