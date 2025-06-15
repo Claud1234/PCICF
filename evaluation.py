@@ -5,40 +5,57 @@
 Created on 12nd May, 2025
 """
 import os
+import glob
 import numpy as np
 import pandas as pd
+import argparse
 import matplotlib.pyplot as plt
 
-better_path = './outputs/bettersmirk_results_yolo_track/evt_01_morton.csv'
-# pie_path = '../outputs/pie_results_yolo_track/output_016_607_744_morton.csv'
-pie_path = './outputs/pie_results_yolo_track/output_008_571_697_morton.csv'
-# pie_path = '../outputs/pie_results_yolo_track/output_013_84_153_morton.csv'
 
-better_csv = pd.read_csv(better_path, sep=';')
-pie_csv = pd.read_csv(pie_path, sep=';')
+def morotn_similarity_check(pie_path, moresmirk_path):
 
-better_np = better_csv.to_numpy()
-pie_np = pie_csv.to_numpy()
+    moresmirk_csv = pd.read_csv(moresmirk_path, sep=';')
+    pie_csv = pd.read_csv(pie_path, sep=';')
 
-pie_morton = pie_np[:, -1] / 10000000
-better_morton = better_np[:, -1] / 10000000
+    moresmirk_np = moresmirk_csv.to_numpy()
+    pie_np = pie_csv.to_numpy()
 
-pie_morton = pie_morton[pie_morton != 0]
-better_morton = better_morton[better_morton != 0]
+    pie_morton = pie_np[:, -1] / 10000000
+    moresmirk_morton = moresmirk_np[:, -1] / 10000000
 
-pie_morton_uni = pd.unique(pie_morton)
-better_morton_uni = pd.unique(better_morton)
+    pie_morton = pie_morton[pie_morton != 0]
+    moresmirk_morton = moresmirk_morton[moresmirk_morton != 0]
 
-iou_unfiltered = sorted(list(set(pie_morton_uni).intersection(set(better_morton_uni))), key=list(pie_morton_uni).index)
+    pie_morton_uni = pd.unique(pie_morton)
+    moresmirk_morton_uni = pd.unique(moresmirk_morton)
 
-iou_filter = []
-better_update = list(better_morton_uni)
-for item in iou_unfiltered:
-    if item in better_update:
-        index = better_update.index(item)
-        better_update = better_update[index+1:]
-        iou_filter.append(item)
+    iou_unfiltered = sorted(list(set(pie_morton_uni).intersection(set(moresmirk_morton_uni))),
+                            key=list(pie_morton_uni).index)
 
-print(iou_filter)
-print(better_morton_uni)
-print(f'the percentage of iou(pie,better) over better is {len(iou_filter)/len(better_morton_uni)}')
+    iou_filter = []
+    moresmirk_update = list(moresmirk_morton_uni)
+    for item in iou_unfiltered:
+        if item in moresmirk_update:
+            index = moresmirk_update.index(item)
+            moresmirk_update = moresmirk_update[index+1:]
+            iou_filter.append(item)
+
+    return iou_filter, moresmirk_morton_uni
+    # print(iou_filter)
+    # print(moresmirk_morton_uni)
+    # print(f'the percentage of iou(pie,moresmirk) over moresmirk is {len(iou_filter)/len(moresmirk_morton_uni)}')
+
+if __name__ == '__main__':
+    # parser = argparse.ArgumentParser(description='Evaluation script for pie-MoreSMIRK matching')
+    # parser.add_argument('-i', '--input', type=str, required=True, help='pie morton csv')
+    #
+    # args = parser.parse_args()
+
+    for p in glob.glob('./outputs/pie_results/*_morton.csv'):
+        print(f'Pedestrian crossing classification analysis for {p.split("/")[-1].split('_morton')[0]}')
+        for m in glob.glob('./datasets/MoreSMIRK/morton_codes/*'):
+            iou, moresmirk = morotn_similarity_check(p, m)
+            similarity = len(iou) / len(moresmirk)
+            if similarity > 0:
+                print(f'The similarity with event_{m.split('/')[-1].split('_')[1]} is {similarity}')
+
