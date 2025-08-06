@@ -1,10 +1,7 @@
 .idea
-smirk/
 *.pyc
 *.pth
 *.png
 *.pdf
 *.pkl
 .ipynb_checkpoints
-outputs/
-datasets/

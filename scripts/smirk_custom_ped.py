@@ -12,15 +12,16 @@ import pandas as pd
 
 df = pd.read_csv('./better_smirk_creat.csv')
 print(df)
-seq_path = 'aITx4TyRncKnardhTgCzz'
+#seq_path = 'N09pgUrFChEH8GM6APzJ0'  # left to right
+seq_path = 'aITx4TyRncKnardhTgCzz'  # right to left
 
 for i in range(100):
     # env_img = cv2.resize(cv2.imread('../datasets/empty_smirk_roi_draw.png'), (640, 480))
     env_img = cv2.resize(cv2.imread('../datasets/empty_smirk.png'), (640, 480))
     anno_img = np.zeros_like(env_img)
     envimg_file = '%03d' % i + '.png'
-    envimg_path = os.path.join('../datasets/better_smirk_80_events/event_1/evt_01', envimg_file)
-    annoimg_path = envimg_path.replace('.png', '.labels.png').replace('evt_01', 'evt_01_anno')
+    envimg_path = os.path.join('../datasets/MoreSMIRK/raw_data/event_8/evt_8', envimg_file)
+    annoimg_path = envimg_path.replace('.png', '.labels.png').replace('evt_8', 'evt_8_anno')
     if not os.path.exists(os.path.dirname(envimg_path)):
         os.makedirs(os.path.dirname(envimg_path))
     if not os.path.exists(os.path.dirname(annoimg_path)):
@@ -43,8 +44,8 @@ for idx, row in df.iterrows():
         rgb_path = os.path.join('../datasets/smirk', seq_path, rgb_file)
         anno_path = rgb_path.replace('.png', '.labels.png')
         result_rgb_file = '%03d' % (row['start_frame'] + i) + '.png'
-        result_rgb_path = envimg_path = os.path.join('../datasets/better_smirk_80_events/event_1/evt_01', result_rgb_file)
-        result_anno_path = result_rgb_path.replace('.png', '.labels.png').replace('evt_01', 'evt_01_anno')
+        result_rgb_path = os.path.join('../datasets/MoreSMIRK/raw_data/event_8/evt_8', result_rgb_file)
+        result_anno_path = result_rgb_path.replace('.png', '.labels.png').replace('evt_8', 'evt_8_anno')
         env_img = cv2.imread(result_rgb_path)
         bgr = cv2.imread(rgb_path)
         bgr = cv2.resize(bgr, (640, 480))

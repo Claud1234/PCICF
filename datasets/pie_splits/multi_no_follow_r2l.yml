@@ -1,0 +1,27 @@
+- id: "pie_024"
+  event_window: [49, 247]
+  comment: two pedestrians start with gap, merge to one at the end
+- id: "pie_029"
+  event_window: [456, 599]
+  comment: two pedestrians with large delay
+- id: "pie_116"
+  event_window: [129, 247]
+  comment: four pedestrians in three clusters
+- id: "pie_161"
+  event_window: [497, 654]
+  comment: two pedestrians with delay
+- id: "pie_292"
+  event_window: [656, 807]
+  comment: two pedestrians with large delay
+- id: "pie_342"
+  event_window: [564, 720]
+  comment: two pedestrians with delay
+- id: "pie_350"
+  event_window: [520, 795]
+  comment: two pedestrians with delay
+- id: "pie_531"
+  event_window: [33, 181]
+  comment: two pedestrians with delay
+- id: "pie_543"
+  event_window: [522, 687]
+  comments: four pedestrians in two clusters with delay

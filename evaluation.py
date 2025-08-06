@@ -50,12 +50,35 @@ if __name__ == '__main__':
     # parser.add_argument('-i', '--input', type=str, required=True, help='pie morton csv')
     #
     # args = parser.parse_args()
-
-    for p in glob.glob('./outputs/pie_results/*_morton.csv'):
+    for p in sorted(glob.glob('./outputs/pie_results/pie_results_event_3/*_morton.csv')):
+        #result = {'event': [], 'similarity': [], 'intersection': [], 'moresmirk': []}
+        event, similarity, pie_intersecion, moresmirk_uni_morton = [], [], [], []
         print(f'Pedestrian crossing classification analysis for {p.split("/")[-1].split('_morton')[0]}')
-        for m in glob.glob('./datasets/MoreSMIRK/morton_codes/*'):
-            iou, moresmirk = morotn_similarity_check(p, m)
-            similarity = len(iou) / len(moresmirk)
-            if similarity > 0:
-                print(f'The similarity with event_{m.split('/')[-1].split('_')[1]} is {similarity}')
+        for m in sorted(glob.glob('./datasets/MoreSMIRK/morton_codes/*')):
+            intersection, moresmirk = morotn_similarity_check(p, m)
+            iou = len(intersection) / len(moresmirk)
+            if iou > 0.19:
+                event.append(m.split('/')[-1].split('_')[1])
+                similarity.append(round(iou, 4))
+                pie_intersecion.append(intersection)
+                moresmirk_uni_morton.append(moresmirk)
+            # if m.split('/')[-1].split('_')[1] != '00' and len(event) == 0:
+            #     event.append(m.split('/')[-1].split('_')[1])
+            #     similarity.append(round(iou, 4))
+            #     pie_intersecion.append(intersection)
+            #     moresmirk_uni_morton.append(moresmirk)
+
+        print(f'event: {event}'
+              f'similarity: {similarity}'
+              f'intersection: {pie_intersecion}'
+              f'moresmirk: {moresmirk_uni_morton}')
+        #         result.append({'event': m.split('/')[-1].split('_')[1],
+        #                        'similarity': similarity,
+        #                        'intersection': intersection,
+        #                        'moresmirk': moresmirk})
+        # print(result)
+                #result.update({'similarity': m.split('/')[-1].split('_')[1],similarity})
+                # print(f'The similarity with event_{m.split('/')[-1].split('_')[1]} is {similarity}')
+                # print(f'intersection: {intersection}')
+                # print(f'moresmirk: {moresmirk}')
 

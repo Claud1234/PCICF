@@ -1,0 +1,28 @@
+- id: "pie_025"
+  event_window: [551, 800]
+  comment: four pedestrians L to R, one pedestrian from R to L
+- id: "pie_031"
+  event_window: [1, 253]
+  comment: four pedestrians from L to R, one pedestrian from R to L
+#- id: "pie_055"
+#  event_window: [85, 253]
+#  comment: 1 pedestrian from L to R, 4 pedestrian from R to L.
+- id: "pie_377"
+  event_window: [91, 357]
+  comment: two pedestrians with delay from L to R, three pedestrians with delay from R to L
+- id: "pie_377"
+  event_window: [451, 671]
+  comment: one pedestrian from L to R, two pedestrians from R to L
+- id: "pie_409"
+  event_window: [567, 822]
+  comment: two pedestrians with delay from L to R, one pedestrian from R to L.
+- id: "pie_418"
+  event_window: [404, 650]
+  comment: one pedestrian from L to R, three pedestrian clusters from R to L
+- id: "pie_537"
+  event_window: [1, 240]
+  comment: one pedestrian from L to R (offset), two pedestrians with large delay from R to L,
+- id: "pie_540"
+  event_window: [96, 276]
+  comment: one pedestrian from L to R, one pedestrian from R to L (offset)
+

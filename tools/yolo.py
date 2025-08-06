@@ -95,12 +95,12 @@ class Yolo(object):
             roi_coord_all = roi_cell_compute(self.config['Dataset']['pie'],
                                              self.config['General']['roi_width'],
                                              self.config['General']['roi_height'])
-        elif self.args.dataset == 'betterSMIRK':
-            roi_coord_all = roi_cell_compute(self.config['Dataset']['betterSMIRK'],
+        elif self.args.dataset == 'MoreSMIRK':
+            roi_coord_all = roi_cell_compute(self.config['Dataset']['MoreSMIRK'],
                                              self.config['General']['roi_width'],
                                              self.config['General']['roi_height'])
         else:
-            sys.exit('A mode must be specified for yolo! (detect or track)')
+            sys.exit("Must specify a dataset, either 'pie' or 'MoreSMIRK'")
 
         roi_yolo_overlap_coord_all = self.find_yolo_roi_overlap(roi_coord_all, yolo_coord_all)
 
@@ -112,17 +112,22 @@ class Yolo(object):
         #          cv2.rectangle(bgr_copy, m[1:3], m[3:5], (0,255,0), 1)
         #
         # plt.imshow(cv2.cvtColor(bgr_copy, cv2.COLOR_BGR2RGB))
-        # plt.show()
+        # plt.sho  w()
 
         if self.args.save_yolo_result is True:
             bgr_copy = bgr.copy()
             for roi_coord in roi_coord_all:
-                cv2.rectangle(bgr_copy, roi_coord[:2], roi_coord[2:], (0, 0, 255), 1)
+                cv2.rectangle(bgr_copy, roi_coord[:2], roi_coord[2:], (0, 0, 255), 2)
             for yolo_coord in yolo_coord_all:
-                cv2.rectangle(bgr_copy, yolo_coord[:2], yolo_coord[2:], (0, 255, 0), 1)
+                cv2.rectangle(bgr_copy, yolo_coord[:2], yolo_coord[2:], (0, 255, 0), 2)
 
             # yolo_detect_path = f'outputs/png_visual_{self.args.dataset}' + rgb_img.split('/')[-1]
-            yolo_detect_path = rgb_img.replace('datasets', f'outputs/png_visual_{self.args.dataset}')
+            if self.args.dataset == 'pie':
+                yolo_detect_path = rgb_img.replace('datasets', os.path.join(f'outputs/{self.args.dataset}_visual', f'{
+                                                        self.config['Dataset']['pie']['yaml_path'].split('.')[0]}'))
+            else:
+                yolo_detect_path = rgb_img.replace('datasets', f'outputs/{self.args.dataset}_visual')
+
             if not os.path.exists(os.path.dirname(yolo_detect_path)):
                 os.makedirs(os.path.dirname(yolo_detect_path))
             cv2.imwrite(yolo_detect_path, bgr_copy)

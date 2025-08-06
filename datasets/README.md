@@ -1,28 +1,27 @@
-## Pie
+Here we provide the two datasets, PIE and MoreSMIRk, that are used for the paper's experiments.
+The raw data can be downloaded from HERE. In repository, we provide the corresponding split and detection files. 
 
-### event_0.yml
-The single pedestrian crossing from left to right.
+### PIE
+'pie_splits' folder contains the human annotation of pedestrians' quantity and crossing pattern in PIE dataset.  
 
-### event_1.yml
-The single pedestrian crossing from right to left.
+|          Files          |                          Description                          | 
+|:-----------------------:|:-------------------------------------------------------------:|
+|     single_l2r.yml      |         single pedestrian crossing from left to right         | 
+|     single_l2r.yml      |         single pedestrian crossing from left to right         | 
+|   two_follow_l2r.yml    |     Two follow-up pedestrians crossing from left to right     | 
+|   two_follow_r2l.pth    |     Two follow-up pedestrians crossing from left to right     | 
+| multi_no_follow_l2r.pth | multiple no-follow-up pedestrians crossing from left to right | 
+| multi_no_follow_r2l.pth | multiple no-follow-up pedestrians crossing from left to right | 
+|   multi_both_dir.pth    |      multiple pedestrians crossing from both directions       |
 
-### event_2.yml
-Two consecutive pedestrians crossing from left to right.
+The examples inside the yml file:
+```angular2html
+- id: "pie_543"
+  event_window: [522, 687]
+  comments: four pedestrians in two clusters with delay
+```
+id --> the PIE dataset sequence 
 
-### event_3.yml
-Two consecutive pedestrians crossing from right to left.
+event_window --> the start and end frame of the crossing event 
 
-### event_4.yml
-Two consecutive pedestrians crossing from left to right, with one gap delay.
-
-### event_5.yml
-Two consecutive pedestrians crossing from left to right, with two gaps delay.
-
-### event_6.yml
-Two consecutive pedestrians crossing from left to right, with three gaps delay.
-
-### event_7.yml
-Two consecutive pedestrians crossing from left to right, with four gaps delay.
-
-### event_8.yml
-Two consecutive pedestrians crossing from left to right, with five gaps delay.
+comments --> human annotator's description of the crossing event. 
