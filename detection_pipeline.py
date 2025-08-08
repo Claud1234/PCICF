@@ -7,14 +7,10 @@ Created on 3rd March, 2025
 
 import os
 import sys
-import cv2
 import yaml
 import json
 import glob
-import zCurve
 import argparse
-
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -23,15 +19,13 @@ from utils import helper
 
 
 def make_input_list(args, config):
-    global dir_name
-    global start_frame
-    global end_frame
     if args.dataset == 'pie':
         input_yml = os.path.join('./datasets/pie_splits/', config['Dataset']['pie']['yaml_path'])
         with open(input_yml, 'r') as _f:
             input_list = yaml.safe_load(_f)
         for seq in input_list:
             input_png_list, seq_name = helper.make_pie_png_list(seq)
+            seq_name = config['Dataset']['pie']['yaml_path'].split('.')[0] + '/' + seq_name
             print(f'Processing the path {seq['id']} of frame {seq['event_window'][0]} to {seq['event_window'][-1]}...')
             run(input_png_list, args, configs, seq_name)
 

@@ -29,16 +29,25 @@ The script is [detection_pipeline.py]. There are three args for this script. \
 -d --> dataset. Choices: pie, MoreSMIRK
 
 In our project, for PIE dataset:
+
+First go to [THIS LINE] in config.json to change the yaml file path for PIE input. Make sure the corresponding 
+yaml file exists in the /datasets/pie_splits
 ```
- python detection_pipeline.py -o ./outputs/pie_results/ -s -d pie
+python detection_pipeline.py -o ./outputs/pie_results/ -s -d pie
 ```
 
 For MoreSMIRK dataset:
+First go to [THIS LINE] in config.json to change the input path for MoreSMIRK dataset. Make sure download the raw 
+data of our MoreSMIRK dataset and put them in the correct path. 
 ```
 python detection_pipeline.py -o ./outputs/more_simrk_results/ -s -d MoreSMIRK
-
 ```
 
+### Evaluation
+
+
+
 ## Output
+- [Output](outputss/README.md)
 
 ## Bibtex

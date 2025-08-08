@@ -1,8 +1,5 @@
 {
   "General":{
-        "device":"cuda:0",
-        "epochs":400,
-        "batch_size":24,
         "yolo_track_threshold": 180,
         "sfc_bounding":0.0,
         "image_width": 640,
@@ -12,23 +9,12 @@
   },
   "Dataset": {
     "pie": {
-      "yaml_path": "single_l2r.yml",
+      "yaml_path": "multi_no_follow_r2l.yml",
       "grid_left_top_coord":[[120, 280], [180, 280], [240, 280], [340, 280], [400, 280], [460, 280]]
     },
     "MoreSMIRK": {
       "input_path": "./datasets/MoreSMIRK/raw_data/event_22/evt_22",
       "grid_left_top_coord":[[120, 200], [180, 200], [240, 200], [340, 200], [400, 200], [460, 200]]
-    },
-    "smirk": {
-      "transforms": {
-      "image_mean": [0.485, 0.456, 0.406],
-      "image_std": [0.229, 0.224, 0.225]
     }
-    }
-  },
-  "mlnet": {
-    "mlnet_input_size": [640, 480],
-    "mlnet_model_path": "./model_paths/mlnet/mlnet_25.pth",
-    "mlnet_pred_saving_path": ""
   }
 }
