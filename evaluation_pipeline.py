@@ -4,12 +4,9 @@
 
 Created on 12nd May, 2025
 """
-import os
 import glob
-import numpy as np
 import pandas as pd
 import argparse
-import matplotlib.pyplot as plt
 
 
 def morton_similarity_check(pie_path, moresmirk_path):
@@ -71,9 +68,3 @@ if __name__ == '__main__':
               f'intersection: {pie_intersecion} \n'
               f'moresmirk: {moresmirk_uni_morton} \n')
         eval_file.close()
-        # print(f'event: {event}'
-        #       f'similarity: {similarity}'
-        #       f'intersection: {pie_intersecion}'
-        #       f'moresmirk: {moresmirk_uni_morton}')
-
-

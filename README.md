@@ -44,7 +44,20 @@ python detection_pipeline.py -o ./outputs/more_simrk_results/ -s -d MoreSMIRK
 ```
 
 ### Evaluation
+First make sure running the detection_pipeline.py on both PIE and MoreSMIRK datasets, and the morton code csv files are 
+saved in corresponding path in outputs folder. In our case, we have provided all csv files in the repo, so you can 
+execute the commands directly. 
 
+The script [evaluation_pipeline.py] contians two args:
+-i --> the path contains all morton csv files for under-testing dataset (PIE dataset). 
+-t --> the threshold of similarity between under-testing dataset and benchmark dataset (MoreSMIRK dataset).
+
+An example for PIE dataset's single-pedestrian-crossing-from-left-to-right scenario:
+```
+python evaluation_pipeline.py -i ./outputs/pie_results/single_l2r -t 0.5
+```
+
+The evaluation results will be saved as txt file at [outputs/pie_eval]
 
 
 ## Output
