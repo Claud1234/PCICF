@@ -1,6 +1,6 @@
 <div align="center">
 
-# PCCF: An End-to-End Pedestrian Crossing Classification Framework to ...
+# PCICF: A Pedestrian Crossing Identification and Classification Framework
 </div>
 
 
