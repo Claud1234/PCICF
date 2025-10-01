@@ -7,7 +7,6 @@ The examples inside the MoreSmirkEvents.yml file:
 - event: 4
   pedestrians: [0, 0, 0, 1, 0, 0]
   offset: 0
-  comments: "single pedestrian R to L"
 ```
 event :  
 The id of the crossing event.
@@ -20,6 +19,3 @@ pedestrians and the three last represent the cluster of R to L walking pedestria
 offset :  
 The offset of the L to R walking pedestrians. An offset of 1 shifts the L to R 
 walking pedestrians by 60 px to the left.
-
-comments :  
-Human annotator's description of the crossing event. 
