@@ -1,0 +1,25 @@
+- id: "pie_003"
+  event_window: [598, 690]
+- id: "pie_012"
+  event_window: [160, 230]
+  comment: two pedestrians merger to one
+- id: "pie_021"
+  event_window: [139, 200] #225
+- id: "pie_034"
+  event_window: [463, 602]
+  comment: far away, challenging
+- id: "pie_036"
+  event_window: [232, 479]
+- id: "pie_037"
+  event_window: [434, 637]
+  comment: two pedestrians merger to one
+- id: "pie_276"
+  event_window: [22, 87]
+- id: "pie_292"
+  event_window: [281, 400]
+  comment: two pedestrians merger to one
+- id: "pie_430"
+  event_window: [192, 538]
+  comment: two pedestrians merger to one then split to two
+
+

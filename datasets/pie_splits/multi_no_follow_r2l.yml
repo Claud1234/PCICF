@@ -3,7 +3,7 @@
   comment: two pedestrians start with gap, merge to one at the end
 - id: "pie_029"
   event_window: [456, 599]
-  comment: two pedestrians with large delay
+  comment: two pedestrians with large delay and half cross
 - id: "pie_116"
   event_window: [129, 247]
   comment: four pedestrians in three clusters
@@ -12,7 +12,7 @@
   comment: two pedestrians with delay
 - id: "pie_292"
   event_window: [656, 807]
-  comment: two pedestrians with large delay
+  comment: three pedestrians intwo clusters with large delay
 - id: "pie_342"
   event_window: [564, 720]
   comment: two pedestrians with delay

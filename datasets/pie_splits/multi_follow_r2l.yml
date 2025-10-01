@@ -1,0 +1,26 @@
+- id: "pie_008"
+  event_window: [571, 697]
+  comment: one pedestrian splits to two
+- id: "pie_009"
+  event_window: [50, 210]
+  comment: one pedestrian splits to two
+- id: "pie_011"
+  event_window: [621, 731]
+  comment: two pedestrians merger to one
+- id: "pie_045"
+  event_window: [343, 410]
+  comment: four pedestrians
+- id: "pie_128"
+  event_window: [101, 232]
+  comment: four pedestrians, far to close
+- id: "pie_280"
+  event_window: [280, 419]
+- id: "pie_282"
+  event_window: [1, 166]
+  comment: two pedestrians merger to one
+- id: "pie_391"
+  event_window: [73, 175]
+- id: "pie_391"
+  event_window: [176, 271]
+- id: "pie_546"
+  event_window: [440, 590]

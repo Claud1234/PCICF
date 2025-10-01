@@ -23,8 +23,8 @@
   event_window: [230, 584]
   comment: three pedestrian clusters with delay
 - id: "pie_445"
-  event_window: [510 , 700]
+  event_window: [510, 700]
   comment: two pedestrian clusters with delay
-- id: "pie_555"
-  event_window: [1, 144]
-  comment: two pedestrians with large delay
+#- id: "pie_555"
+#  event_window: [1, 144]
+#  comment: two pedestrians with large delay
