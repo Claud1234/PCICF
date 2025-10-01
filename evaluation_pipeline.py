@@ -55,16 +55,16 @@ if __name__ == '__main__':
         for m in sorted(glob.glob('./datasets/MoreSMIRK/morton_codes/*')):
             intersection, moresmirk = morton_similarity_check(p, m)
             iou = len(intersection) / len(moresmirk)
-            if iou > args.threshold:
+            if iou >= args.threshold:
                 event.append(m.split('/')[-1].split('_')[3])
                 similarity.append(round(iou, 4))
                 pie_intersecion.append(intersection)
                 moresmirk_uni_morton.append(moresmirk)
 
         eval_file = open(args.input.replace('pie_results', 'pie_eval') + '.txt', 'a')
-        eval_file.write(f'Pedestrian crossing classification analysis for {p.split("/")[-1].split('_morton')[0]} \n' 
-              f'event: {event} \n'
-              f'similarity: {similarity} \n'
-              f'intersection: {pie_intersecion} \n'
-              f'moresmirk: {moresmirk_uni_morton} \n')
+        eval_file.write(f'Pedestrian crossing classification analysis for {p.split("/")[-1].split('_morton')[0]} \n')
+        event_sim_pair = [f'{event[i]}/{similarity[i]}' for i in range(len(event))]
+        eval_file.write(f'Event/similarity pair: {event_sim_pair} \n')
+        eval_file.write(f'intersection: {pie_intersecion} \n'
+                        f'moresmirk: {moresmirk_uni_morton} \n')
         eval_file.close()

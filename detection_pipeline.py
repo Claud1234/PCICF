@@ -78,6 +78,7 @@ def run(input_list, args, config, seq_name):
         ax2.scatter(morton, frame, s=5, color='green')
         ax2.set_ylabel("Frame Number")
         plt.savefig(morton_csv_path.replace('.csv', '.png'))
+        plt.close()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='yolo-sfc-multi-ped pipeline for PIE dataset')

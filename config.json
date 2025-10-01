@@ -9,7 +9,7 @@
   },
   "Dataset": {
     "pie": {
-      "yaml_path": "multi_no_follow_r2l.yml",
+      "yaml_path": "multi_follow_l2r.yml",
       "grid_left_top_coord":[[120, 280], [180, 280], [240, 280], [340, 280], [400, 280], [460, 280]]
     },
     "MoreSMIRK": {
