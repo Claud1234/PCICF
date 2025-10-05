@@ -19,3 +19,12 @@ pedestrians and the three last represent the cluster of R to L walking pedestria
 offset :  
 The offset of the L to R walking pedestrians. An offset of 1 shifts the L to R 
 walking pedestrians by 60 px to the left.
+
+## MoreSMIRK full configuration
+|  Event | Left Pedestrian | Offset | Right Pedestrian |
+|:------:|:--------------:|:--------:|:-----------------:|
+| 0      |   _ _ X        | N/A      |       _ _ _       |
+| 1      |   _ X X        | N/A      |       _ _ _       |
+| 2      |   X _ X        | N/A      |      _ _ _        |
+| 3      |   X X X        | N/A      |       _ _ _       |
+| 4      |                | N/A      |      _ _ _        |
