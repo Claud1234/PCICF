@@ -3,14 +3,21 @@
 # PCICF: A Pedestrian Crossing Identification and Classification Framework
 </div>
 
+https://github.com/user-attachments/assets/304346f5-74c2-4282-ac6a-1a9a14b2bc19
+
+> **PCICF: A Pedestrian Crossing Identification and Classification Framework**
+> - [Paper in arXiv](https://arxiv.org/abs/2509.24386)
+
 
 ## Abstract
+We have recently observed the commercial roll-out of robotaxis in various countries, including the USA and Germany. They are deployed within an operational design domain (ODD) on specific routes and environmental conditions, and are subject to continuous monitoring to regain control in safety-critical traffic situations. Since ODDs typically cover urban areas, robotaxis must reliably detect and interact with vulnerable road users (VRUs) such as pedestrians, bicyclists, or e-scooter riders. To better handle such varied traffic situations, end-to-end AI, which directly compute vehicle control actions from multi-modal sensor data instead of only for perception,is on the rise. High quality data is needed for systematically training and evaluating such systems within their OOD. In this work, we propose PCICF, a framework to systematically identify and classify VRU situations to support ODD’s incident analysis. We base our work on the existing synthetic dataset SMIRK, and enhance it by extending its single-pedestrian-only design into the MoreSMIRK dataset, a structured dictionary of multi-pedestrian crossing situations constructed systematically. We then use space-filling curves (SFCs) to transform multi-dimensional features of scenarios into characteristic patterns, which we match with corresponding entries in MoreSMIRK. We evaluate PCICF with the large real-world dataset PIE, which contains more than 150 manually annotated pedestrian crossing videos. We show that PCICF can successfully identify and classify complex pedestrian crossing situations, even when groups of pedestrians merge or split during their crossing. By leveraging computationally efficient components like SFCs, PCICF has even potential to be used onboard of robotaxis for out-of-distribution (OOD) detection for example. We share an open-source replication package for PCICF containing its algorithms, the complete MoreSMIRK dataset and dictionary, as well as our experiment results.
 
 ## Method
 <img width="2634" height="1373" alt="pipeline_architecture drawio" src="https://github.com/user-attachments/assets/a9b31306-f7f8-4639-ae99-ddc4e420e57b" />
 
 ## Installation
-We use python 3.12 in all experiments. The conda yml file of our environment is available in repo. 
+We use python 3.12 in all experiments. The pytorch versionis 2.5.0, and the cuda version is 11.8.
+The conda yml file of our environment is available in repo. We recommend to use this yml file when working on this repo. 
 
 ## Dataset
 - [Dataset](datasets/README.md)
@@ -65,3 +72,16 @@ The evaluation results will be saved as txt file at [outputs/pie_eval](outputs/p
 - [Output](outputs/README.md)
 
 ## Bibtex
+If anything in this repo has a use for your work, please considering to cite our work.
+```
+@misc{gu2025pcicfpedestriancrossingidentification,
+      title={PCICF: A Pedestrian Crossing Identification and Classification Framework}, 
+      author={Junyi Gu and Beatriz Cabrero-Daniel and Ali Nouri and Lydia Armini and Christian Berger},
+      year={2025},
+      eprint={2509.24386},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2509.24386}, 
+}
+```
+
