@@ -64,7 +64,7 @@ def GenerateImageSequence(event):
     evtStr = str(event)
 
     for i in range(100):
-        env_img = cv2.resize(cv2.imread('../datasets/empty_smirk.png'), (640, 480))
+        env_img = cv2.resize(cv2.imread('../datasets/MoreSMIRK/empty_smirk.png'), (640, 480))
         anno_img = np.zeros_like(env_img)
         envimg_file = '%03d' % i + '.png'
         envimg_path = os.path.join('../datasets/MoreSMIRK/raw_data/event_' + evtStr + '/evt_'+evtStr, envimg_file)

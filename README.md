@@ -9,7 +9,7 @@ https://github.com/user-attachments/assets/304346f5-74c2-4282-ac6a-1a9a14b2bc19
 > - [Paper in arXiv](https://arxiv.org/abs/2509.24386)
 
 # News
-- [14-10-2025] The scripts to execute the detection and evaluaiton pipeline are availble and verified. The PIE dataset that used to evaluate the PCICF in paper is available to download. 
+- [14-10-2025] The scripts to execute the detection and evaluation pipeline are available and verified. The PIE dataset that used to evaluate the PCICF in paper is available to download. 
 
 
 ## Abstract
@@ -19,7 +19,7 @@ We have recently observed the commercial roll-out of robotaxis in various countr
 <img width="2634" height="1373" alt="pipeline_architecture drawio" src="https://github.com/user-attachments/assets/a9b31306-f7f8-4639-ae99-ddc4e420e57b" />
 
 ## Installation
-We use python 3.12 in all experiments. The pytorch versionis 2.5.0, and the cuda version is 11.8.
+We use python 3.12 in all experiments. The pytorch version is 2.5.0, and the cuda version is 11.8.
 The conda yml file of our environment is available in repo. We recommend to use this yml file when working on this repo. 
 
 ## Dataset
