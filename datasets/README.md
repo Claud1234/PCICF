@@ -8,7 +8,10 @@ All the raw data (PNG images) must be put in this folder in required structure i
 ### PIE
 Please note in our experiments we didn't use all PIE dataset, we picked the sequences contain the pedestrian crossing and export the PNGs from the videos. 
 
-Download the raw PNGs archive of PIE dataset from [HERE](https://www.roboticlab.eu/claude/pie/) first, then decompress it here. You should have a folder called 'pie' here. 
+Unfortunately the public link to download the PIE dataset (around 15 GB) that used in this project in no longer available, please contact 
+claude.gujunyi@gmail.com if you are interested in it, we can figure out a way to transfer the dataset. 
+
+When you get the dataset archive, decompress it here. You should have a folder called 'pie'. 
 
 'pie_splits' folder contains the human annotation of pedestrian crossing in PIE dataset. When execute the [detection_pipeline.py](../detection_pipeline.py), you have to specify one of the yml files in config.json. 
 
